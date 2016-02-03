@@ -11,7 +11,7 @@ my_tree <- tol_induced_subtree(ott_ids = resolved_names$ott_id)
 plot(my_tree, no.margin=TRUE)
 
 ## ------------------------------------------------------------------------
-taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus", "Acer")
+taxa <- c("Hyla", "Salmo", "Diadema", "Nautilus")
 resolved_names <- tnrs_match_names(taxa)
 resolved_names
 inspect(resolved_names, taxon_name = "diadema")
@@ -22,7 +22,7 @@ resolved_names <- update(resolved_names, taxon_name = "diadema",
 
 ## we could also have used the ott_id to replace this taxon:
 ## resolved_names <- update(resolved_names, taxon_name = "diadema",
-##                          new_ott_id = 631176)
+##                          new_ott_id = 4930522)
 
 ## ------------------------------------------------------------------------
 diadema_info <- taxonomy_taxon(631176)
@@ -45,7 +45,27 @@ furry_ids <- unlist(furry_studies$matched_studies)
 
 ## ------------------------------------------------------------------------
 furry_meta <- get_study_meta("pg_2550")
-knitr::kable(get_publication(furry_meta))     ## The citation for the source of the study
+get_publication(furry_meta)     ## The citation for the source of the study
 get_tree_ids(furry_meta)        ## This study has 10 trees associated with it
 candidate_for_synth(furry_meta) ## None of these trees are yet included in the OTL
+
+## ---- eval=FALSE---------------------------------------------------------
+#  get_study_tree(study_id="pg_710", tree_id="tree1277",
+#                 tip_label='ott_taxon_name', file = "/tmp/tree.tre",
+#                 file_format = "newick")
+#  tr <- ape::read.tree(file = "/tmp/tree.tre")
+
+## ------------------------------------------------------------------------
+turducken <- c("Meleagris", "Anas", "Gallus")
+taxa <- tnrs_match_names(turducken, context="Animals")
+taxa
+
+## ---- eval=FALSE---------------------------------------------------------
+#  tr <- tol_induced_subtree(taxa$ott_id)
+
+## ------------------------------------------------------------------------
+turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
+taxa <- tnrs_match_names(turducken_spp, context="Animals")
+tr <- tol_induced_subtree(taxa$ott_id)
+plot(tr)
 

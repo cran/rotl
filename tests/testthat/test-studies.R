@@ -5,7 +5,7 @@ context("test of studies")
 ############################################################################
 
 test_that("studies_properties is a list with 2 elements (if breaks, need to update documentation)", {
-        skip_on_cran()
+    skip_on_cran()
     expect_true(all(names(studies_properties() %in% c("tree_properties", "study_properties"))))
 })
 
@@ -16,7 +16,7 @@ test_that("studies_properties is a list with 2 elements (if breaks, need to upda
 
 test_that("get_study returns an error when asking for a study that doesn't exist", {
     skip_on_cran()
-    expect_error(get_study("tt_666666"), "GET failure")
+    expect_error(get_study("tt_666666"))
 })
 
 test_that("get_study generates a phylo object", {
@@ -44,7 +44,7 @@ test_that("get_study generates a newick file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "newick", file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a nexus file", {
@@ -52,7 +52,7 @@ test_that("get_study generates a nexus file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "nexus", file = ff)
     expect_true(tr)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a nexml file", {
@@ -60,7 +60,7 @@ test_that("get_study generates a nexml file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "nexml", file = ff)
     expect_true(tr)
-    expect_true(grepl("^<\\?xml", readLines(ff, n = 1)))
+    expect_true(grepl("^<\\?xml", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study generates a json file", {
@@ -68,7 +68,7 @@ test_that("get_study generates a json file", {
     ff <- tempfile()
     tr <- get_study("pg_719", file_format = "json", file = ff)
     expect_true(tr)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 
@@ -78,15 +78,13 @@ test_that("get_study generates a json file", {
 ############################################################################
 
 test_that("get_study_tree returns error when tree doesn't exist", {
-        skip_on_cran()
-    expect_error(get_study_tree("2655", "tree5555"),
-                 "not found in study")
+    skip_on_cran()
+    expect_error(get_study_tree("2655", "tree5555"))
 })
 
 test_that("get_study_tree returns error when study doesn't exist", {
     skip_on_cran()
-    expect_error(get_study_tree("5555555", "tree555555"),
-                 "GET failure")
+    expect_error(get_study_tree("5555555", "tree555555"))
 })
 
 
@@ -96,7 +94,7 @@ test_that("get_study_tree generates nexus file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "nexus",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree generates newick file", {
@@ -105,7 +103,7 @@ test_that("get_study_tree generates newick file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "newick",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree generates json file", {
@@ -114,7 +112,7 @@ test_that("get_study_tree generates json file", {
     tt <- get_study_tree("pg_1144", "tree2324", file_format = "json",
                          file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_tree returns a phylo object", {
@@ -191,14 +189,12 @@ test_that("get_study_tree returns a phylo object and ott_taxon_names for tip lab
 
 test_that("get_study_subtree returns an error when study_id doesn't exist", {
         skip_on_cran()
-    expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"),
-                 "GET failure")
+        expect_error(get_study_subtree("pg_55555", "tree55555", subtree_id = "node555555"))
 })
 
 test_that("get_study_subtree returns an error when tree_id doesn't exist", {
     skip_on_cran()
-    expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"),
-                 "subresource .+ not found in study")
+    expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"))
 })
 
 ## API still returns object
@@ -225,7 +221,7 @@ test_that("get_study_subtree returns a nexus file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "nexus", file = ff)
     expect_true(tt)
-    expect_true(grepl("^#NEXUS", readLines(ff, n = 1)))
+    expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_subtree returns a newick file", {
@@ -234,7 +230,7 @@ test_that("get_study_subtree returns a newick file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "newick", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\(", readLines(ff, n = 1)))
+    expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
 test_that("get_study_subtree returns a json file", {
@@ -243,7 +239,7 @@ test_that("get_study_subtree returns a json file", {
     tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
                             file_format = "json", file = ff)
     expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1)))
+    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
 })
 
 
@@ -275,6 +271,10 @@ test_that("candidate_for_synth method for study_meta", {
     expect_true(candidate_for_synth(sm) %in% get_tree_ids(sm))
 })
 
+test_that("get_study_year method for study_meta", {
+     skip_on_cran()
+     expect_equal(get_study_year(sm), 2011)
+ })
 
 ############################################################################
 ## tol_about                                                              ##
@@ -292,3 +292,193 @@ test_that("study_about", {
     expect_true(nrow(ta) > 100)
     expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))
 })
+
+############################################################################
+## studies_find_studies                                                   ##
+############################################################################
+
+test_that("single study detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:studyId",
+                                          value = "ot_248", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
+                                                "candidate", "study_year", "title",
+                                                "study_doi")))
+              expect_true(nrow(res) >= 1L)
+              expect_equal(res[["study_ids"]], "ot_248")
+              expect_equal(res[["n_trees"]], "1")
+              expect_equal(res[["candidate"]], "Tr76302")
+              expect_equal(res[["study_year"]], "2014")
+              expect_equal(res[["study_doi"]], "http://dx.doi.org/10.1016/j.cub.2014.06.060")
+              expect_equal(res[["title"]], "'Phylogenomic Resolution of the Class Ophiuroidea Unlocks a Global Microfossil Record'")
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+})
+
+test_that("single study detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:studyId",
+                                          value = "ot_248", detailed = FALSE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "study_ids"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_match(attr(res, "found_trees"), "list of the trees associated")
+              expect_equal(names(res), "study_ids")
+              expect_equal(res[1, 1], "ot_248")
+              expect_equal(nrow(res), 1L)
+              expect_equal(ncol(res), 1L)
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+test_that("multiple studies detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
+                                                "candidate", "study_year",
+                                                "title", "study_doi")))
+              expect_true(nrow(res) >= 8L)
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+test_that("multiple studies detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = FALSE)
+              expect_true(inherits(res, "study_ids"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_true(inherits(res, "data.frame"))
+              expect_equal(ncol(res), 1L)
+              expect_true(nrow(res) >= 8)
+              expect_equal(names(res), "study_ids")
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+
+############################################################################
+## studies_find_trees                                                     ##
+############################################################################
+
+test_that("studies_find_trees single study detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:studyId",
+                                        value = "ot_248", detailed = FALSE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_match(attr(res, "found_trees"), "Tr76302")
+              expect_equal(names(res), c("study_ids",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
+              expect_equal(res[1, 1], "ot_248")
+              expect_equal(nrow(res), 1L)
+              expect_equal(ncol(res), 3L)
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+test_that("studies_find_trees single study detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:studyId",
+                                        value = "ot_248", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_equal(names(res), c("study_ids", "n_trees",
+                                         "tree_ids", "candidate",
+                                         "study_year", "title",
+                                         "study_doi",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
+              expect_equal(nrow(res), 1L)
+              expect_equal(res[["study_ids"]], "ot_248")
+              expect_equal(res[["n_trees"]], "1")
+              expect_equal(res[["candidate"]], "Tr76302")
+              expect_equal(res[["study_year"]], "2014")
+              expect_equal(res[["study_doi"]], "http://dx.doi.org/10.1016/j.cub.2014.06.060")
+              expect_equal(res[["title"]], "'Phylogenomic Resolution of the Class Ophiuroidea Unlocks a Global Microfossil Record'")
+              expect_equal(res[["tree_ids"]], "Tr76302")
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+test_that("studies_find_trees multiple studies detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:ottTaxonName",
+                                        value = "Echinodermata", detailed = TRUE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_equal(names(res), c("study_ids", "n_trees",
+                                         "tree_ids", "candidate",
+                                         "study_year", "title",
+                                         "study_doi",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
+              expect_true(nrow(res) >= 5L)
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+test_that("studies_find_trees multiple studies detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:ottTaxonName",
+                                        value = "Echinodermata", detailed = FALSE)
+              expect_true(inherits(res, "data.frame"))
+              expect_true(inherits(res, "matched_studies"))
+              expect_equal(names(res), c("study_ids",
+                                         "n_matched_trees",
+                                         "match_tree_ids"))
+              expect_true(nrow(res) >= 5L)
+              expect_true(length(attr(res, "metadata")) > 0)
+              expect_true(length(attr(res, "found_trees")) > 0)
+          })
+
+
+############################################################################
+## list_trees                                                             ##
+############################################################################
+
+test_that("list_trees with studies_find_studies and detailed = FALSE", {
+              skip_on_cran()
+              expect_match(list_trees(studies_find_studies(
+                                          property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = FALSE)),
+                           "If you want to get a list of the trees associated with the studies")
+          })
+
+test_that("list_trees with studies_find_studies and detailed = TRUE",  {
+              skip_on_cran()
+              res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
+                                          value = "Aves", detailed = TRUE)
+              expect_true(inherits(list_trees(res), "list"))
+              expect_true(length(list_trees(res)) >= 8)
+              expect_true(sum(names(list_trees(res)) %in% c("pg_435", "ot_428",
+                                                            "pg_420", "ot_429",
+                                                            "ot_214", "ot_117",
+                                                            "ot_116", "pg_2799")) >= 8)
+          })
+
+test_that("list_trees with studies_find_trees and detailed=FALSE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:ottTaxonName",
+                                        value = "Echinodermata", detailed = FALSE)
+              lt <- list_trees(res)
+              expect_true(inherits(lt, "list"))
+              expect_true(length(names(lt)) >=  5L)
+              expect_true(all(sapply(lt, length) >=  1L))
+          })
+
+test_that("list_trees with studies_find_trees and detailed=TRUE", {
+              skip_on_cran()
+              res <- studies_find_trees(property = "ot:ottTaxonName",
+                                        value = "Echinodermata", detailed = TRUE)
+              lt <- list_trees(res)
+              expect_true(inherits(lt, "list"))
+              expect_true(length(names(lt)) >=  5L)
+              expect_true(all(sapply(lt, length) >=  1L))
+          })

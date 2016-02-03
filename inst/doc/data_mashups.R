@@ -8,7 +8,7 @@ library(rotl)
 tnrs_contexts()
 
 ## ---- match--------------------------------------------------------------
-taxon_search <- tnrs_match_names(mu$species, context_name="All life")
+taxon_search <- tnrs_match_names(names=mu$species, context_name="All life")
 knitr::kable(taxon_search)
 
 ## ---- munge--------------------------------------------------------------
@@ -22,8 +22,8 @@ studies_properties()
 studies_find_trees(property="ot:ottId", value="180195")
 
 ## ---- all_taxa_count-----------------------------------------------------
-hits <- sapply(mu$ott_id, studies_find_trees, property="ot:ottId")
-sapply(hits, length)
+hits <- lapply(mu$ott_id, studies_find_trees, property="ot:ottId", detailed = FALSE)
+sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 
 ## ----subtree,  fig.width=7, fig.height=4---------------------------------
 tr <- tol_induced_subtree(ott_ids=mu$ott_id)

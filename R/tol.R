@@ -76,7 +76,7 @@ print.tol_summary <- function(x, ...) {
 ##' listing the \code{tree_id}, \code{study_id} and \code{git_sha} for
 ##' the studies currently included in the Tree of Life.
 ##'
-##' @title List of studies used for the Tree of Life
+##' @title List of studies used in the Tree of Life
 ##' @param tol an object created using \code{tol_about(study_list = TRUE)}
 ##' @return a data frame
 ##' @export
@@ -181,14 +181,16 @@ tol_subtree <- function(ott_id = NULL, tree_id = NULL, file, ...) {
 ##' synthetic tree. This tree is equivalent to the minimal subtree
 ##' induced on the draft tree by the set of identified nodes. Ott ids
 ##' that do not correspond to any nodes found in the graph, or which
-##' are in the graph but are absent from the synthetic tree, will be
+##' are in the graph but are absent from the synthetic tree (e.g. groups
+##' included in the Open Tree Taxonomy but found to be paraphyletic in 
+##' in studies contributing to the synthetic tree) , will be
 ##' identified in the output (but obvisouly will be absent from the
 ##' resulting induced tree). Branch lengths in the result may be
 ##' arbitrary, and the tip labels of the tree may either be taxonomic
 ##' names or (for nodes not corresponding directly to named taxa) node
 ##' ids.
 ##'
-##' @title induced subtree
+##' @title Subtree from the Open Tree of Life
 ##' @param ott_ids OTT ids indicating nodes to be used as tips in the
 ##'     induced tree
 ##' @param file if specified, the function will write the subtree to a
@@ -229,4 +231,24 @@ tol_induced_subtree <- function(ott_ids=NULL, file, ...) {
         phy <- phylo_from_otl(res)
         return(phy)
     }
+}
+
+
+##' Strip OTT ids from tip labels
+##' @param tip_labels a character vector containing tip labels (most likely 
+##'     the \code{tip.label} element from a tree returned by
+##'     \code{\link{tol_induced_subtree}}
+##' @return A character vector containing the contents of \code{tip_labels}
+##'     with any OTT ids removed.
+##' @examples
+##' \dontrun{
+##' genera <- c("Perdix", "Clangula", "Dendroica", "Cinclus", "Stellula", "Struthio")
+##' tr <- tol_induced_subtree(ott_ids=c(292466, 501678, 267845, 666104, 316878, 102710, 176458))
+##' tr$tip.label %in% genera
+##' tr$tip.label <- strip_ott_ids(tr$tip.label)
+##' tr$tip.label %in% genera
+##'}
+##'@export
+strip_ott_ids <- function(tip_labels){
+    sub("_ott\\d+$", "", tip_labels)
 }

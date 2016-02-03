@@ -55,6 +55,7 @@
 ##'  deuterostomes <- tnrs_match_names(names=c("echinodermata", "xenacoelomorpha",
 ##'                                             "chordata", "hemichordata"))
 ##' }
+##' @importFrom stats setNames
 ##' @export
 tnrs_match_names <- function(names = NULL, context_name = NULL,
                              do_approximate_matching = TRUE,
@@ -72,17 +73,31 @@ tnrs_match_names <- function(names = NULL, context_name = NULL,
                              include_dubious = include_dubious, ...)
 
     check_tnrs(res)
-    summary_match <- build_summary_match(res, res_id = seq_len(length(res[["results"]])),
+    summary_match <- build_summary_match(res, res_id = seq_along(res[["results"]]),
                                          match_id = 1)
 
     summary_match$search_string <- gsub("\\\\", "", summary_match$search_string)
     summary_match <- summary_match[match(tolower(names), summary_match$search_string), ]
+
+    summary_match[["approximate_match"]] <- convert_to_logical(summary_match[["approximate_match"]])
+    summary_match[["is_synonym"]] <- convert_to_logical(summary_match[["is_synonym"]])
+    summary_match[["is_deprecated"]] <- convert_to_logical(summary_match[["is_deprecated"]])
+
     attr(summary_match, "original_order") <- as.numeric(rownames(summary_match))
     rownames(summary_match) <- NULL
     attr(summary_match, "original_response") <- res
     attr(summary_match, "match_id") <- rep(1, nrow(summary_match))
     class(summary_match) <- c("match_names", "data.frame")
     summary_match
+}
+
+##' @importFrom stats na.omit
+convert_to_logical <- function(x) {
+    if (all(stats::na.omit(x) %in% c("TRUE", "FALSE"))) {
+        x <- as.logical(x)
+    } else {
+        x
+    }
 }
 
 check_tnrs <- function(req) {
@@ -135,6 +150,17 @@ build_summary_match <- function(res, res_id, match_id = NULL) {
     ## Needed if only 1 row returned
     if (!inherits(build_summary_row, "list")) {
         build_summary_row <- list(build_summary_row)
+    }
+
+    ## Add potential unmatched names
+    if (length(res[["unmatched_name_ids"]])) {
+        no_match <- lapply(res[["unmatched_name_ids"]], function(x) {
+            no_match_row <- stats::setNames(rep(NA, length(tnrs_columns) + 1),
+                                     c(tnrs_columns, "number_matches"))
+            no_match_row[1] <- x
+            no_match_row
+        })
+        build_summary_row <- c(build_summary_row, no_match)
     }
 
     summary_match <- do.call("rbind", build_summary_row)
