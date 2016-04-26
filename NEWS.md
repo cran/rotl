@@ -1,4 +1,58 @@
+## rotl 3.0.0
+
+* `rotl` now interacts with v3.0 of the Open Tree of Life APIs. The
+  documentation has been updated to reflect the associated changes. More
+  information about the v3.0 of the Open Tree of Life APIs can be found
+  [on their wiki](https://github.com/OpenTreeOfLife/germinator/wiki/Open-Tree-of-Life-Web-APIs).
+
+
+### New features
+
+* New methods: `tax_sources`, `is_suppressed`, `tax_rank`, `unique_name`,
+  `name`, `ott_id`, for objects returned by `tnrs_match_names()`,
+  `taxonomy_taxon_info()`, `taxonomy_taxon_mrca()`, `tol_node_info()`,
+  `tol_about()`, and `tol_mrca()`. Each of these methods have their own class.
+
+* New method `tax_lineage()` to extract the higher taxonomy from an object
+  returned by `taxonomy_taxon_info()` (initally suggested by Matt Pennell, #57).
+
+* New method `tol_lineage()` to extract the nodes towards the root of the tree.
+
+* New print methods for `tol_node_info()` and `tol_mrca()`.
+
+* New functions `study_external_IDs()` and `taxon_external_IDs()` that return
+  the external identifiers for a study and associated trees (e.g., DOI, TreeBase
+  ID); and the identifiers of taxon names in taxonomic databases. The vignette
+  "Data mashup" includes an example on how to use it.
+
+* The function `strip_ott_id()` gains the argument `remove_underscores` to remove
+  underscores from tips in trees returned by OTL.
+
+### Changes
+
+* Rename method `ott_taxon_name()` to `tax_name()` for consistency.
+
+* Rename method `synth_sources()` and `study_list()` to `source_list()`.
+
+* Refactor how result of query is checked and parsed (invisible to the user).
+
+### Bug fixes
+
+* Fix bug in `studies_find_studies()`, the arguments `verbose` and `exact` were
+  ignored.
+
+* The argument `only_current` has been dropped for the methods associated with
+  objects returned by `tnrs_match_names()`
+
+* The print method for `tnrs_context()` duplicated some names.
+
+* `inspect()`, `update()` and `synonyms()` methods for `tnrs_match_names()` did
+  not work if the query included unmatched taxa.
+
+
 ## rotl 0.5.0
+
+* New vignette: `meta-analysis`
 
 * Added arguments `include_lineage` and `list_terminal_descendants` to
   `taxonomy_taxon()`
@@ -12,7 +66,8 @@
 
 * New utility function `strip_ott_ids` removes OTT id information from
   a character vector, making it easier to match tip labels in trees returned by
-  `tol_induced_subtree` to taxonomic names in other data sources.
+  `tol_induced_subtree` to taxonomic names in other data sources. This function
+  can also remove underscores from the taxon names.
 
 * New method `list_trees` returns a list of tree ids associated with
   studies. The function takes the output of `studies_find_studies` or

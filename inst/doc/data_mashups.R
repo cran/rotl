@@ -34,8 +34,7 @@ mu$ott_name[1]
 tr$tip.label[4]
 
 ## ---- sub----------------------------------------------------------------
-tr$tip.label <- sub("_ott\\d+", "", tr$tip.label)
-tr$tip.label <- sub("_", " ", tr$tip.label)
+tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
 tr$tip.label %in% mu$ott_name
 
 ## ----phylobase-----------------------------------------------------------
@@ -46,4 +45,17 @@ tree_data <- phylo4d(tr, mu_numeric)
 
 ## ----  fig.width=7, fig.height=5-----------------------------------------
 plot(tree_data)
+
+## ------------------------------------------------------------------------
+extra_data <- study_external_IDs("pg_1980")
+extra_data
+
+## ------------------------------------------------------------------------
+library(rentrez)
+seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta")
+cat(seqs)
+
+## ------------------------------------------------------------------------
+Tt_ids <- taxon_external_IDs(mu$ott_id[2])
+Tt_ids
 

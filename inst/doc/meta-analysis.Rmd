@@ -44,14 +44,17 @@ publisher's website. We can collect the data from using `fulltext` (with the
 papers DOI as input) and read it into memory with `gdata`:
 
 ```{r egg_data, cache=TRUE}
-library(gdata)
 library(rotl)
 library(fulltext)
 
-doi <- "10.1111/jeb.12282"
-xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
-egg_data <- read.xls(xls = xl_file)
-egg_data
+## if (suppressMessages(require(gdata))) {
+##     doi <- "10.1111/jeb.12282"
+##     xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
+##     egg_data <- read.xls(xls = xl_file)
+## } else {
+    egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"))
+#}
+head(egg_data)
 ```
 
 The most important variable in this dataset is `Zr`, which is a [normalized
@@ -146,13 +149,13 @@ and error).
 
 We can deal with all these details easily. `rotl` provides  the convenience
 function `strip_ott_ids` to remove the extra information from the tip labels.
-With the IDs removed, we can use our taxon map to replace the tip labels in th tree
+With the IDs removed, we can use our taxon map to replace the tip labels in the tree
 with the species names from dataset.
 
 
 
 ```{r clean_tips}
-otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
+otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
 tr$tip.label <- taxon_map[ otl_tips ]
 ```
 
@@ -181,8 +184,8 @@ error variance, effectively adding extra weight to the results of more powerful
 studies. Here's how we specify and fit that model with `MCMCglmm`:
 
 
-```{r model, echo=FALSE}
-library(MCMCglmm)
+```{r model}
+library(MCMCglmm, quiet=TRUE)
 set.seed(123)
 
 pr<-list(R=list(V=1,nu=0.002),

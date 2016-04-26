@@ -287,10 +287,10 @@ test_that("tol_about returns class tol_summary", {
 
 test_that("study_about", {
     skip_on_cran()
-    ta <- study_list(tol_about(TRUE))
+    ta <- source_list(tol_about(TRUE))
     expect_true(inherits(ta, "data.frame"))
     expect_true(nrow(ta) > 100)
-    expect_equal(names(ta), c("tree_id", "study_id", "git_sha"))
+    expect_equal(names(ta), c("study_id","tree_id", "git_sha"))
 })
 
 ############################################################################
@@ -372,7 +372,7 @@ test_that("studies_find_trees single study detailed=FALSE", {
                                         value = "ot_248", detailed = FALSE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
-              expect_match(attr(res, "found_trees"), "Tr76302")
+              expect_match(attr(res, "found_trees")[[1]], "Tr76302")
               expect_equal(names(res), c("study_ids",
                                          "n_matched_trees",
                                          "match_tree_ids"))

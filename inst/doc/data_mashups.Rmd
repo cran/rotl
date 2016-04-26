@@ -13,10 +13,10 @@ vignette: >
 
 One of the major goals of `rotl` is to help users combine data from other
 sources with the phylogenetic trees in the Open Tree database. This examples
-demonstrates how a user might connect data they have collected to trees from
-Open Tree.
+document describes some of the ways in whih a user might connect data to trees
+from Open Tree.
 
-## Get Open Tree ids to match your data.
+## Get Open Tree IDs to match your data.
 
 Let's say you have a dataset where each row represents a measurement taken from
 one species, and your goal is to put these measurements in some phylogenetic
@@ -87,6 +87,7 @@ use `studies_find_trees` to do this search.
 ```{r taxon_count}
 studies_find_trees(property="ot:ottId", value="180195")
 ```
+
 Well... that's not very promising. We can repeat that process for all of the IDs
 to see if the other species are better represented.
 
@@ -95,6 +96,7 @@ to see if the other species are better represented.
 hits <- lapply(mu$ott_id, studies_find_trees, property="ot:ottId", detailed = FALSE)
 sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 ```
+
 OK, most of our species are not in any of the published trees available. You can
 help fix this sort of problem by [making sure you submit your published trees to
 Open Tree](https://tree.opentreeoflife.org/curator).
@@ -129,22 +131,17 @@ mu$ott_name[1]
 tr$tip.label[4]
 ```
 
-We can use `sub` to the remove the underscores and `ottId` from the tree
-(check out `?regex` to see how these patterns work) and `%in%` to confirm that
-each of the modified labels matches a taxon in our `data.frame`:
+`rotl` provides a convienence function `strip_ott_ids` to deal with these. 
 
 ```{r, sub}
-tr$tip.label <- sub("_ott\\d+", "", tr$tip.label)
-tr$tip.label <- sub("_", " ", tr$tip.label)
+tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
 tr$tip.label %in% mu$ott_name
 ```
 
 Ok, now the tips are together we can make a new dataset. The `phylo4d()`
-functions matches tip lables to the row names of a `data.frame`, so let's make
+functions matches tip labels to the row names of a `data.frame`, so let's make
 a new dataset that contains just the relevant data and has row names to match
 the tree
-
-
 
 ```{r phylobase}
 library(phylobase)
@@ -159,9 +156,62 @@ And now we can plot the data and the tree together
 plot(tree_data)
 ```
 
+##Find external data associated with studies, trees and taxa from Open Tree
+
+In the above example we looked for a tree that related species in another dataset. 
+Now we will go the other way, and try to find data associated with Open Tree records
+in other databases.
+
+### Get external data from a study
+
+Let's imagine you were interested in extending or reproducing the results of a
+published study. If that study is included in Open Tree you can find it via
+`studies_find_studies` or `studies_find_trees` and retrieve the published trees 
+with `get_study`. `rotl` will also help you find external. The function 
+`study_external_IDs` retrieves the DOI for a given study, and uses that to 
+gather some more data:
+
+```{r}
+extra_data <- study_external_IDs("pg_1980")
+extra_data
+```
+
+Here the returned object contains an `external_data_url` (in this case a link to
+the study in Treebase), a pubmed ID for the paper and a vector IDs for the
+NCBI's nuleotide database. The packages `treebase` and `rentrez` provide
+functions to make use of these IDs within R.
+
+As an example, let's use `rentrez` to download the first two DNA seqences and
+print them. 
+
+```{r}
+library(rentrez)
+seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta")
+cat(seqs)
+```
+
+You could further process these sequences in R with the function `read.dna` from 
+`ape` or save them to disk by specifying a file name with `cat`.
+
+### Find a OTT taxon in another taxonomic database
+
+It is also possible map an Open Tree taxon to a record in another taxonomic
+database. For instance, if we wanted to search for data about one of the tips of
+the sub-tree we fetched in the example above we could do so using
+`taxon_external_IDs`:
+
+```{r}
+Tt_ids <- taxon_external_IDs(mu$ott_id[2])
+Tt_ids
+```
+
+A user could then use `rgbif` to find locality records using the gbif ID or
+`rentrez` to get genetic or bibliometric data about from the NCBI's databases.
+
+
 ## What next
 
-The demonstration get's you to the point of visualizing your data in a
+The demonstration gets you to the point of visualizing your data in a
 phylogenetic context. But there's a lot more you do with this sort of data in R.
 For instance, you could use packages like `ape`, `caper`, `phytools` and
 `mcmcGLMM` to perform phylogenetic comparative analyses of your data. You could

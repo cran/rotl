@@ -25,10 +25,10 @@ resolved_names <- update(resolved_names, taxon_name = "diadema",
 ##                          new_ott_id = 4930522)
 
 ## ------------------------------------------------------------------------
-diadema_info <- taxonomy_taxon(631176)
+diadema_info <- taxonomy_taxon_info(631176)
 tax_rank(diadema_info)
 synonyms(diadema_info)
-ott_taxon_name(diadema_info)
+tax_name(diadema_info)
 
 ## ------------------------------------------------------------------------
 diadema_tax_tree <- taxonomy_subtree(631176)
@@ -41,7 +41,7 @@ plot(mono_tree)
 
 ## ------------------------------------------------------------------------
 furry_studies <- studies_find_studies(property="ot:focalCladeOTTTaxonName", value="Mammalia")
-furry_ids <- unlist(furry_studies$matched_studies)
+furry_ids <- furry_studies$study_ids
 
 ## ------------------------------------------------------------------------
 furry_meta <- get_study_meta("pg_2550")
@@ -63,7 +63,7 @@ taxa
 ## ---- eval=FALSE---------------------------------------------------------
 #  tr <- tol_induced_subtree(taxa$ott_id)
 
-## ------------------------------------------------------------------------
+## ---- fig.width=7, fig.height=4------------------------------------------
 turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
 taxa <- tnrs_match_names(turducken_spp, context="Animals")
 tr <- tol_induced_subtree(taxa$ott_id)

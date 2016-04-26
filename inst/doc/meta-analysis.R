@@ -1,12 +1,15 @@
 ## ----egg_data, cache=TRUE------------------------------------------------
-library(gdata)
 library(rotl)
 library(fulltext)
 
-doi <- "10.1111/jeb.12282"
-xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
-egg_data <- read.xls(xls = xl_file)
-egg_data
+## if (suppressMessages(require(gdata))) {
+##     doi <- "10.1111/jeb.12282"
+##     xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
+##     egg_data <- read.xls(xls = xl_file)
+## } else {
+    egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"))
+#}
+head(egg_data)
 
 ## ----eggs_in_a_funnel, fig.width=6, fig.height=3-------------------------
 plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
@@ -36,14 +39,14 @@ plot(tr, show.tip.label=FALSE)
 tr$tip.label[1:4]
 
 ## ----clean_tips----------------------------------------------------------
-otl_tips <- sub("_", " ", strip_ott_ids(tr$tip.label))
+otl_tips <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
 tr$tip.label <- taxon_map[ otl_tips ]
 
 ## ----remove_nodes--------------------------------------------------------
 tr$node.label <- NULL
 
-## ----model, echo=FALSE---------------------------------------------------
-library(MCMCglmm)
+## ----model---------------------------------------------------------------
+library(MCMCglmm, quiet=TRUE)
 set.seed(123)
 
 pr<-list(R=list(V=1,nu=0.002),
