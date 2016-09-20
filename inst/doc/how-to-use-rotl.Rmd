@@ -92,7 +92,7 @@ in the FAQ below.
 Now that we have the correct `ott_id` for our taxa, we can ask for the tree
 using the `tol_induced_subtree()` function. By default, the object returned by
 `tol_induced_subtree` is a phylo object (from the
-[ape](http://cran.r-project.org/package=ape) package), so we can plot it
+[ape](https://cran.r-project.org/package=ape) package), so we can plot it
 directly.
 
 ```{r, fig.width=7, fig.height=4}
@@ -172,8 +172,8 @@ first identify it by its node id or ott id, and then use the `tol_subtree()`
 function:
 
 ```{r, fig.width=7, fig.height=4}
-mono_id <- tnrs_match_names("Monotremes")
-mono_tree <- tol_subtree(ott_id = mono_id$ott_id[1])
+mono_id <- tnrs_match_names("Monotremata")
+mono_tree <- tol_subtree(ott_id = ott_id(mono_id))
 plot(mono_tree)
 ```
 
@@ -231,7 +231,18 @@ get_study_tree(study_id="pg_710", tree_id="tree1277",
 tr <- ape::read.tree(file = "/tmp/tree.tre")
 ```
 
-### Why are OTT IDs discovered with ROTL missing from an induced subtree?
+### How do I get the higher taxonomy for a given taxa?
+
+If you encounter a taxon name you are not familiar with, it might be useful to
+obtain its higher taxonomy to see where it fits in the tree of life. We can
+combine several taxonomy methods to extract this information easily.
+
+```{r}
+giant_squid <- tnrs_match_names("Architeuthis")
+tax_lineage(taxonomy_taxon_info(ott_id(giant_squid), include_lineage = TRUE))
+```
+
+### Why are OTT IDs discovered with `rotl` missing from an induced subtree?
 
 Some taxonomic names that can be retrieved through the taxonomic name
 resolution service are not part of the Open Tree's synthesis tree. These are

@@ -2,13 +2,13 @@
 library(rotl)
 library(fulltext)
 
-## if (suppressMessages(require(gdata))) {
-##     doi <- "10.1111/jeb.12282"
-##     xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
-##     egg_data <- read.xls(xls = xl_file)
-## } else {
+if (require(readxl)) {
+    doi <- "10.1111/jeb.12282"
+    xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
+    egg_data <- read_excel(xl_file)
+} else {
     egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"))
-#}
+}
 head(egg_data)
 
 ## ----eggs_in_a_funnel, fig.width=6, fig.height=3-------------------------

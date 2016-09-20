@@ -35,8 +35,8 @@ diadema_tax_tree <- taxonomy_subtree(631176)
 diadema_tax_tree
 
 ## ---- fig.width=7, fig.height=4------------------------------------------
-mono_id <- tnrs_match_names("Monotremes")
-mono_tree <- tol_subtree(ott_id = mono_id$ott_id[1])
+mono_id <- tnrs_match_names("Monotremata")
+mono_tree <- tol_subtree(ott_id = ott_id(mono_id))
 plot(mono_tree)
 
 ## ------------------------------------------------------------------------
@@ -54,6 +54,10 @@ candidate_for_synth(furry_meta) ## None of these trees are yet included in the O
 #                 tip_label='ott_taxon_name', file = "/tmp/tree.tre",
 #                 file_format = "newick")
 #  tr <- ape::read.tree(file = "/tmp/tree.tre")
+
+## ------------------------------------------------------------------------
+giant_squid <- tnrs_match_names("Architeuthis")
+tax_lineage(taxonomy_taxon_info(ott_id(giant_squid), include_lineage = TRUE))
 
 ## ------------------------------------------------------------------------
 turducken <- c("Meleagris", "Anas", "Gallus")

@@ -1,6 +1,7 @@
 
+
 [![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl)
-[![Build status](https://ci.appveyor.com/api/projects/status/v8occu2l14ucr5fl?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl-3g068)
+[![Build status](https://ci.appveyor.com/api/projects/status/jwvl84e6m36bqwga?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl)
 [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master)
 [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl)
@@ -109,7 +110,7 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![plot of chunk get_tr](http://i.imgur.com/P55UOSa.png)
+![plot of chunk get_tr](http://i.imgur.com/t9GhUs5.png)
 
 The code above can be summarized in a single pipe:
 
@@ -124,8 +125,25 @@ c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     plot
 ```
 
-![plot of chunk pipe](http://i.imgur.com/voU3EQA.png)
+![plot of chunk pipe](http://i.imgur.com/wDgMNtP.png)
 
+## Versioning
+
+Starting with v3.0.0 of the package, the major and minor version numbers (the
+first 2 digits of the version number) will be matched to those of the API. The
+patch number (the 3rd digit of the version number) will be used to reflect
+bug fixes and other changes that are independent from changes to the API.
+
+`rotl` can be used to access other versions of the API (if they are available)
+but most likely the high level functions will not work. Instead, you will need
+to parse the output yourself using the "raw" returns from the unexported
+low-level functions (all prefixed with a `.`). For instance to use the
+`tnrs/match_names` endpoint for `v2` of the API:
+
+
+```r
+rotl:::.tnrs_match_names(c("pan", "pango", "gorilla", "hoolock", "homo"), otl_v="v2")
+```
 
 
 ### Code of Conduct
