@@ -1,8 +1,7 @@
 ## ----egg_data, cache=TRUE------------------------------------------------
 library(rotl)
-library(fulltext)
 
-if (require(readxl)) {
+if (require(readxl) && require(fulltext)) {
     doi <- "10.1111/jeb.12282"
     xl_file <- ft_get_si(doi, 1, save.name="egg.xls")
     egg_data <- read_excel(xl_file)

@@ -1,3 +1,26 @@
+## rotl 3.0.2
+
+### New features
+
+* The function `get_study_subtree` gains the argument `tip_label` to control the
+  formatting of the tip labels, #90, reported by @bomeara
+* The new function `is_in_tree` takes a list of OTT ids (i.e., the output of
+  `ott_id()`), and returns a vector of logical indiicating whether they are
+  included in the synthetic tree (workaround #31).
+
+### Bug fixes
+
+* The function `get_study_subtree` ignored the argument `subtree_id`, #89
+  reported by @bomeara
+
+### Other chaanges
+
+* `citation("rotl")` now includes the reference to the Open Tree of Life
+  publication.
+* The "How to use rotl?" vignette was updated to document the behavior of v3 of
+  the OTL API which returns an HTTP error code 400 when the request for induced
+  subtree includes taxa that are not in the synthetic tree (fix #84)
+
 ## rotl 3.0.1
 
 * Fix tests and vignette to reflect changes accompanying release 6.1 of the

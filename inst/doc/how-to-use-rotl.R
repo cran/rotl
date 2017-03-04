@@ -60,16 +60,21 @@ giant_squid <- tnrs_match_names("Architeuthis")
 tax_lineage(taxonomy_taxon_info(ott_id(giant_squid), include_lineage = TRUE))
 
 ## ------------------------------------------------------------------------
-turducken <- c("Meleagris", "Anas", "Gallus")
+turducken <- c("Meleagris", "Anas", "Gallus", "Sus")
 taxa <- tnrs_match_names(turducken, context="Animals")
 taxa
 
-## ---- eval=FALSE---------------------------------------------------------
-#  tr <- tol_induced_subtree(taxa$ott_id)
+## ---- error=TRUE---------------------------------------------------------
+tr <- tol_induced_subtree(ott_id(taxa))
+
+## ------------------------------------------------------------------------
+in_tree <- is_in_tree(ott_id(taxa))
+in_tree
+tr <- tol_induced_subtree(ott_id(taxa)[in_tree])
 
 ## ---- fig.width=7, fig.height=4------------------------------------------
-turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus")
+turducken_spp <- c("Meleagris gallopavo", "Anas platyrhynchos", "Gallus gallus", "Sus scrofa")
 taxa <- tnrs_match_names(turducken_spp, context="Animals")
-tr <- tol_induced_subtree(taxa$ott_id)
+tr <- tol_induced_subtree(ott_id(taxa))
 plot(tr)
 

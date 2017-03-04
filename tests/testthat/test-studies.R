@@ -155,7 +155,7 @@ test_that("get_study_tree returns a phylo object and original labels for tip lab
 
 test_that("get_study_tree returns an error if file is given but file format is not", {
     skip_on_cran()
-    expect_error(get_study_tree(study_id="pg_1144", tree="tree2324", file = "test"),
+    expect_error(get_study_tree(study_id="pg_1144", tree_id="tree2324", file = "test"),
                  "must be specified")
 })
 
@@ -197,28 +197,34 @@ test_that("get_study_subtree returns an error when tree_id doesn't exist", {
     expect_error(get_study_subtree("pg_1144", "tree55555", subtree_id = "node555555"))
 })
 
-## API still returns object
-## test_that("get_study_subtree returns an error when the subtree_id is invalid",
-##           expect_error(get_study_subtree("pg_1144", "tree2324", "foobar")))
+test_that("get_study_subtree returns an error when the subtree_id is invalid", {
+    skip_on_cran()
+    expect_error(get_study_subtree("pg_1144", "tree2324", "foobar"))
+})
 
 test_that("get_study_subtree returns a phylo object", {
     skip_on_cran()
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             object_format = "phylo")
+    sub_tt <- get_study_subtree("pg_420", "tree522", subtree_id = "node208580",
+                                object_format = "phylo")
     expect_true(inherits(tt, "phylo"))
     expect_true(length(tt$tip.label) > 1)
+    expect_true(inherits(sub_tt, "phylo"))
+    expect_true(length(sub_tt$tip.label) > 1)
+    expect_true(length(tt$tip.label) > length(sub_tt$tip.label))
 })
 
 test_that("get_study_subtree fails if file name is given but no file format", {
     skip_on_cran()
-    expect_error(get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    expect_error(get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                                    file = "test"), "must be specified")
 })
 
 test_that("get_study_subtree returns a nexus file", {
     skip_on_cran()
     ff <- tempfile(fileext = ".nex")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             file_format = "nexus", file = ff)
     expect_true(tt)
     expect_true(grepl("^#NEXUS", readLines(ff, n = 1, warn = FALSE)))
@@ -227,20 +233,29 @@ test_that("get_study_subtree returns a nexus file", {
 test_that("get_study_subtree returns a newick file", {
     skip_on_cran()
     ff <- tempfile(fileext = ".tre")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
+    tt <- get_study_subtree("pg_420", "tree522", subtree_id = "ingroup",
                             file_format = "newick", file = ff)
     expect_true(tt)
     expect_true(grepl("^\\(", readLines(ff, n = 1, warn = FALSE)))
 })
 
-test_that("get_study_subtree returns a json file", {
+test_that("get_study_subtree can deduplicate labels", {
     skip_on_cran()
-    ff <- tempfile(fileext = ".json")
-    tt <- get_study_subtree("pg_1144", "tree2324", subtree_id = "ingroup",
-                            file_format = "json", file = ff)
-    expect_true(tt)
-    expect_true(grepl("^\\{", readLines(ff, n = 1, warn = FALSE)))
+    expect_warning(get_study_subtree(study_id="pg_710", tree_id="tree1277",
+                                     tip_label='ott_taxon_name',
+                                     subtree_id = "ingroup", deduplicate = TRUE),
+                   "and have been modified")
 })
+
+test_that("get_study_subtree fails with duplicate labels", {
+    skip_on_cran()
+    expect_error(get_study_subtree(study_id="pg_710", tree_id="tree1277",
+                                     tip_label='ott_taxon_name',
+                                   subtree_id = "ingroup", deduplicate = FALSE),
+                 "has already been encountered")
+})
+
+
 
 
 ############################################################################
@@ -336,7 +351,7 @@ test_that("single study detailed=FALSE", {
 test_that("multiple studies detailed=TRUE", {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = TRUE)
+                                          value = "mammalia", detailed = TRUE)
               expect_true(inherits(res, "data.frame"))
               expect_true(inherits(res, "matched_studies"))
               expect_true(all(names(res) %in% c("study_ids", "n_trees", "tree_ids",
@@ -350,7 +365,7 @@ test_that("multiple studies detailed=TRUE", {
 test_that("multiple studies detailed=FALSE", {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = FALSE)
+                                          value = "mammalia", detailed = FALSE)
               expect_true(inherits(res, "study_ids"))
               expect_true(inherits(res, "matched_studies"))
               expect_true(inherits(res, "data.frame"))
@@ -454,13 +469,13 @@ test_that("list_trees with studies_find_studies and detailed = FALSE", {
 test_that("list_trees with studies_find_studies and detailed = TRUE",  {
               skip_on_cran()
               res <- studies_find_studies(property = "ot:focalCladeOTTTaxonName",
-                                          value = "Aves", detailed = TRUE)
+                                          value = "mammalia", detailed = TRUE)
               expect_true(inherits(list_trees(res), "list"))
               expect_true(length(list_trees(res)) >= 8)
-              expect_true(sum(names(list_trees(res)) %in% c("pg_435", "ot_428",
-                                                            "pg_420", "ot_429",
-                                                            "ot_214", "ot_117",
-                                                            "ot_116", "pg_2799")) >= 8)
+              expect_true(sum(names(list_trees(res)) %in% c("pg_2647", "ot_308",
+                                                            "pg_2812", "ot_109",
+                                                            "pg_2582", "pg_1428",
+                                                            "ot_755", "pg_2550")) >= 8)
           })
 
 test_that("list_trees with studies_find_trees and detailed=FALSE", {
