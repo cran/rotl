@@ -1,5 +1,6 @@
 
-[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/jwvl84e6m36bqwga?svg=true)](https://ci.appveyor.com/project/fmichonneau/rotl) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
+[![Build Status](https://travis-ci.org/ropensci/rotl.svg?branch=master)](https://travis-ci.org/ropensci/rotl) [![Build status](https://ci.appveyor.com/api/projects/status/qr4k9a8wlrjl65rp?svg=true)](https://ci.appveyor.com/project/ropensci/rotl) [![codecov.io](https://codecov.io/github/ropensci/rotl/coverage.svg?branch=master)](https://codecov.io/github/ropensci/rotl?branch=master) [![](http://www.r-pkg.org/badges/version/rotl)](http://www.r-pkg.org/pkg/rotl) [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/rotl)](http://www.r-pkg.org/pkg/rotl) [![Research software impact](http://depsy.org/api/package/cran/rotl/badge.svg)](http://depsy.org/package/r/rotl)
+[![](https://badges.ropensci.org/17_status.svg)](https://github.com/ropensci/onboarding/issues/17)
 
 An R interface to Open Tree API
 ===============================
@@ -52,29 +53,22 @@ Taxonomic names are represented in the Open Tree by numeric identifiers, the `ot
 
 ``` r
 library(rotl)
-```
-
-    ## Warning: package 'rotl' was built under R version 3.4.0
-
-``` r
-apes <- c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
+apes <- c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo")
 (resolved_names <- tnrs_match_names(apes))
 ```
 
     ##   search_string unique_name approximate_match ott_id is_synonym flags
-    ## 1           pan         Pan             FALSE 417957      FALSE      
-    ## 2         pongo       Pongo             FALSE 417949      FALSE      
-    ## 3           pan         Pan             FALSE 417957      FALSE      
-    ## 4       gorilla     Gorilla             FALSE 417969      FALSE      
-    ## 5       hoolock     Hoolock             FALSE 712902      FALSE      
-    ## 6          homo        Homo             FALSE 770309      FALSE      
+    ## 1         pongo       Pongo             FALSE 417949      FALSE      
+    ## 2           pan         Pan             FALSE 417957      FALSE      
+    ## 3       gorilla     Gorilla             FALSE 417969      FALSE      
+    ## 4       hoolock     Hoolock             FALSE 712902      FALSE      
+    ## 5          homo        Homo             FALSE 770309      FALSE      
     ##   number_matches
     ## 1              2
     ## 2              2
-    ## 3              2
+    ## 3              1
     ## 4              1
     ## 5              1
-    ## 6              1
 
 Now we can get the tree with just those tips:
 
@@ -83,21 +77,34 @@ tr <- tol_induced_subtree(ott_ids=ott_id(resolved_names))
 plot(tr)
 ```
 
-![](http://i.imgur.com/u0JYjjN.png)
+![](http://i.imgur.com/hfR1DRi.png)
 
 The code above can be summarized in a single pipe:
 
 ``` r
 library(magrittr)
 ## or expressed as a pipe:
-c("Pan", "Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
+c("Pongo", "Pan", "Gorilla", "Hoolock", "Homo") %>%
     tnrs_match_names %>%
     ott_id %>%
     tol_induced_subtree %>%
     plot
 ```
 
-![](http://i.imgur.com/1wjfPsN.png)
+![](http://i.imgur.com/TM9nzPI.png)
+
+Citation and Manuscript
+-----------------------
+
+To cite `rotl` in publications pleases use:
+
+> Michonneau, F., Brown, J. W. and Winter, D. J. (2016), rotl: an R package to interact with the Open Tree of Life data. Methods in Ecology and Evolution. 7(12):1476-1481. doi: [10.1111/2041-210X.12593](https://doi.org/10.1111/2041-210X.12593)
+
+You may also want to cite the paper for the Open Tree of Life
+
+> Hinchliff, C. E., et al. (2015). Synthesis of phylogeny and taxonomy into a comprehensive tree of life. Proceedings of the National Academy of Sciences 112.41 (2015): 12764-12769 doi: [10.1073/pnas.1423041112](https://doi.org/10.1073/pnas.1423041112)
+
+The manuscript in *Methods in Ecology and Evolution* includes additional examples on how to use the package. The manuscript and the code it contains are also hosted on GitHub at: <https://github.com/fmichonneau/rotl-ms>
 
 Versioning
 ----------

@@ -181,7 +181,7 @@ source_list.tol_summary <- .source_list
 ##'     nodes is not in the synthetic tree an error will be returned.
 ##'
 ##'     Taxonomic methods (\code{tax_sources()}, \code{ott_id()},
-##'     \code{unique_name()}, ...) are availble on the objects
+##'     \code{unique_name()}, ...) are available on the objects
 ##'     returned by \code{tol_mrca()}. If the MRCA node is MRTA, the
 ##'     name of the object returned by these methods will start with
 ##'     \sQuote{ott}, otherwise it will start with \sQuote{mrca}.
@@ -286,9 +286,10 @@ source_list.tol_summary <- .source_list
 ##'
 ##' @examples
 ##' \dontrun{
-##' birds_mrca <- tol_mrca(ott_ids=c(412129, 536234))
+##' birds_mrca <- tol_mrca(ott_ids=c(412129, 119214))
 ##' ott_id(birds_mrca)
-##' tax_sources(birds_mrca)}
+##' tax_sources(birds_mrca)
+##' }
 ##' @rdname tol_mrca
 ##' @export
 tol_mrca <- function(ott_ids=NULL, node_ids=NULL, ...) {
@@ -378,7 +379,7 @@ source_list.tol_mrca <- .source_list
 ##'     \code{\link{rotl}} for more information).
 ##'
 ##' @return If no value is specified to the \code{file} argument
-##'     (default), a phyogenetic tree of class \code{phylo}.
+##'     (default), a phylogenetic tree of class \code{phylo}.
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##'
@@ -424,17 +425,18 @@ tol_subtree <- function(ott_id=NULL, node_id=NULL, label_format=NULL,
 ##'     \code{\link{rotl}} for more information).
 ##'
 ##' @return If no value is specified to the \code{file} argument
-##'     (default), a phyogenetic tree of class \code{phylo}.
+##'     (default), a phylogenetic tree of class \code{phylo}.
 ##'
 ##'     Otherwise, the function returns invisibly a logical indicating
 ##'     whether the file was successfully created.
 ##'
 ##' @examples
 ##' \dontrun{
-##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
+##' res <- tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710))
 ##' tree_file <- tempfile(fileext=".tre")
-##' tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-##'                     file=tree_file)}
+##' tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710),
+##'                     file=tree_file)
+##' }
 ##' @export
 tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
                                 file, ...) {
@@ -462,11 +464,12 @@ tol_induced_subtree <- function(ott_ids=NULL, node_ids=NULL, label_format=NULL,
 ##'
 ##' @examples
 ##' \dontrun{
-##' genera <- c("Perdix", "Dendroica", "Cinclus", "Selasphorus", "Struthio")
-##' tr <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 102710))
+##' genera <- c("Perdix", "Setophaga", "Cinclus", "Struthio")
+##' tr <- tol_induced_subtree(ott_ids=c(102710, 285198, 267845, 292466))
 ##' tr$tip.label %in% genera
 ##' tr$tip.label <- strip_ott_ids(tr$tip.label)
-##' tr$tip.label %in% genera}
+##' tr$tip.label %in% genera
+##' }
 ##'@export
 strip_ott_ids <- function(tip_labels, remove_underscores=FALSE){
     stripped <- sub("_ott\\d+$", "", tip_labels)

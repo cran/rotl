@@ -26,7 +26,7 @@ file in newick format.}
 }
 \value{
 If no value is specified to the \code{file} argument
-    (default), a phyogenetic tree of class \code{phylo}.
+    (default), a phylogenetic tree of class \code{phylo}.
 
     Otherwise, the function returns invisibly a logical indicating
     whether the file was successfully created.
@@ -42,8 +42,9 @@ induced on the draft tree by the set of identified nodes.
 }
 \examples{
 \dontrun{
-res <- tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710))
+res <- tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710))
 tree_file <- tempfile(fileext=".tre")
-tol_induced_subtree(ott_ids=c(292466, 267845, 666104, 316878, 102710),
-                    file=tree_file)}
+tol_induced_subtree(ott_ids=c(292466, 267845, 316878, 102710),
+                    file=tree_file)
+}
 }
