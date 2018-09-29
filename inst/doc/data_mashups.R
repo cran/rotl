@@ -40,7 +40,7 @@ tr$tip.label %in% mu$ott_name
 
 ## ----phylobase-----------------------------------------------------------
 library(phylobase)
-mu_numeric <- mu[,c("mu", "pop.size", "genome.size")]
+mu_numeric <- mu[, c("mu", "pop.size", "genome.size")]
 rownames(mu_numeric) <- mu$ott_name
 tree_data <- phylo4d(tr, mu_numeric)
 
@@ -48,13 +48,17 @@ tree_data <- phylo4d(tr, mu_numeric)
 plot(tree_data)
 
 ## ------------------------------------------------------------------------
-extra_data <- study_external_IDs("pg_1980")
-extra_data
+extra_data <- try(study_external_IDs("pg_1980"), silent=TRUE)
+if (!inherits(extra_data, "try-error"))
+  extra_data
 
 ## ------------------------------------------------------------------------
 library(rentrez)
-seqs <- entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta")
-cat(seqs)
+seqs <- try(entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta"), silent = TRUE)
+
+if (inherits(seqs, "try-error")) {
+  cat("NCBI temporarily down.")
+} else cat(seqs)
 
 ## ------------------------------------------------------------------------
 Tt_ids <- taxon_external_IDs(mu$ott_id[2])
