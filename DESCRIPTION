@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.5
+Version: 3.0.6
 Authors@R: c(
   person("Francois", "Michonneau", role=c("aut", "cre"),
          email="francois.michonneau@gmail.com",
@@ -27,13 +27,13 @@ Suggests: knitr (>= 1.12), rmarkdown (>= 0.7), testthat, RNeXML,
 VignetteBuilder: knitr
 LazyData: true
 Encoding: UTF-8
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 X-schema.org-keywords: metadata, ropensci, phylogenetics,
         independant-contrasts, biodiversity
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-relatedLink: https://codemeta.github.io/codemetar
 NeedsCompilation: no
-Packaged: 2018-09-29 13:36:05 UTC; francois
+Packaged: 2019-01-20 13:30:43 UTC; francois
 Author: Francois Michonneau [aut, cre]
     (<https://orcid.org/0000-0002-9092-966X>),
   Joseph Brown [aut] (<https://orcid.org/0000-0002-3835-8062>),
@@ -41,4 +41,4 @@ Author: Francois Michonneau [aut, cre]
   Scott Chamberlain [rev] (<https://orcid.org/0000-0003-1444-9135>)
 Maintainer: Francois Michonneau <francois.michonneau@gmail.com>
 Repository: CRAN
-Date/Publication: 2018-09-29 14:10:04 UTC
+Date/Publication: 2019-01-20 14:00:02 UTC

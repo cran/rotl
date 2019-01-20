@@ -1,3 +1,19 @@
+## ----load-package--------------------------------------------------------
+library(rotl)
+
+## ----egg_data------------------------------------------------------------
+## This should work, but Wiley has currently broken the URLs to access the
+## SI. 
+## if (require(readxl) && require(fulltext)) {
+## doi <- "10.1111/jeb.12282"
+## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)    
+## egg_data <- read_excel(xl_file)
+## } else {
+egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
+                     stringsAsFactors = FALSE)
+## }
+head(egg_data)
+
 ## ----eggs_in_a_funnel, fig.width=6, fig.height=3-------------------------
 plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
      ylab="Effect size (Zr)",
@@ -7,6 +23,10 @@ plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
 ## ---- clean_eggs---------------------------------------------------------
 egg_data <- as.data.frame(egg_data)
 egg_data$animal <- tolower(egg_data$animal)
+
+## ----birds---------------------------------------------------------------
+taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
+head(taxa)
 
 ## ----bird_map------------------------------------------------------------
 taxon_map <- structure(taxa$search_string, names=taxa$unique_name)

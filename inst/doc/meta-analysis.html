@@ -12,54 +12,286 @@
 
 <meta name="author" content="David Winter" />
 
-<meta name="date" content="2018-09-29" />
+<meta name="date" content="2019-01-20" />
 
 <title>Using the Open Tree synthesis in a comparative analysis</title>
 
 
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-div.sourceCode { overflow-x: auto; }
-table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-  margin: 0; padding: 0; vertical-align: baseline; border: none; }
-table.sourceCode { width: 100%; line-height: 100%; }
-td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
 </style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 
 
 
-<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
 
 </head>
 
@@ -70,7 +302,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Using the Open Tree synthesis in a comparative analysis</h1>
 <h4 class="author"><em>David Winter</em></h4>
-<h4 class="date"><em>2018-09-29</em></h4>
+<h4 class="date"><em>2019-01-20</em></h4>
 
 
 
@@ -86,19 +318,18 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="gather-the-data" class="section level3">
 <h3>Gather the data</h3>
 <p>If we are going to reproduce this analysis, we will first need to gather the data. Thankfully, the data is available as supplementary material from the publisher’s website. We can collect the data from using <code>fulltext</code> (with the papers DOI as input) and read it into memory with <code>readxl::read_excel</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rotl)
-
-## This should work, but Wiley has currently broken the URLs to access the
-## SI. 
-## if (require(readxl) &amp;&amp; require(fulltext)) {
-## doi &lt;- &quot;10.1111/jeb.12282&quot;
-## xl_file &lt;- try(ft_get_si(doi, 1, save.name=&quot;egg.xls&quot;), silent = TRUE)    
-## egg_data &lt;- read_excel(xl_file)
-## } else {
-egg_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;egg.csv&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;rotl&quot;</span>),
-                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
-## }
-<span class="kw">head</span>(egg_data)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(rotl)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">## This should work, but Wiley has currently broken the URLs to access the</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">## SI. </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">## if (require(readxl) &amp;&amp; require(fulltext)) {</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">## doi &lt;- &quot;10.1111/jeb.12282&quot;</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">## xl_file &lt;- try(ft_get_si(doi, 1, save.name=&quot;egg.xls&quot;), silent = TRUE)    </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">## egg_data &lt;- read_excel(xl_file)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">## } else {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">egg_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;egg.csv&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;rotl&quot;</span>),</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">                     <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">## }</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">head</span>(egg_data)</a></code></pre></div>
 <pre><code>##                   animal                   Spp       Lndim Measure Neggs
 ## 1 Zonotrichia_leucophrys White-crowned sparrow 0.000000000  volume   294
 ## 2      Passer_domesticus         House sparrow 0.009407469  volume   149
@@ -121,20 +352,20 @@ egg_data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span cl
 ## 5 0.07423744 0.008254242
 ## 6 0.05183471 0.004197959</code></pre>
 <p>The most important variable in this dataset is <code>Zr</code>, which is a <a href="https://en.wikipedia.org/wiki/Fisher_transformation">normalized effect size</a> for difference ,in size between eggs that contain males and females. Values close to zero come from studies that found the sex of an egg’s inhabitant had little effect in its size, while large positive or negative values correspond to studies with substantial sex biases (towards males and females respectively). Since this is a meta-analysis we should produce the classic <a href="https://en.wikipedia.org/wiki/Funnel_plot">funnel plot</a> with effects-size on the y-axis and precision (the inverse of the sample standard error) on the x-axis. Here we calculate precision from the sample variance (<code>Vzr</code>):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">/</span><span class="kw">sqrt</span>(egg_data<span class="op">$</span>VZr), egg_data<span class="op">$</span>Zr, <span class="dt">pch=</span><span class="dv">16</span>,
-     <span class="dt">ylab=</span><span class="st">&quot;Effect size (Zr)&quot;</span>,
-     <span class="dt">xlab=</span><span class="st">&quot;Precision (1/SE)&quot;</span>,
-     <span class="dt">main=</span><span class="st">&quot;Effect sizes for sex bias in egg size among 51 brid species&quot;</span> )</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">plot</span>(<span class="dv">1</span><span class="op">/</span><span class="kw">sqrt</span>(egg_data<span class="op">$</span>VZr), egg_data<span class="op">$</span>Zr, <span class="dt">pch=</span><span class="dv">16</span>,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">     <span class="dt">ylab=</span><span class="st">&quot;Effect size (Zr)&quot;</span>,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">     <span class="dt">xlab=</span><span class="st">&quot;Precision (1/SE)&quot;</span>,</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">     <span class="dt">main=</span><span class="st">&quot;Effect sizes for sex bias in egg size among 51 brid species&quot;</span> )</a></code></pre></div>
 <p><img src="data:image/png;base64,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" /><!-- --></p>
 <p>In order to use this data later on we need to first convert it to a standard <code>data.frame</code>. We can also convert the <code>animal</code> column (the species names) to lower case which will make it easier to match names later on:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">egg_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(egg_data)
-egg_data<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">tolower</span>(egg_data<span class="op">$</span>animal)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">egg_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(egg_data)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">egg_data<span class="op">$</span>animal &lt;-<span class="st"> </span><span class="kw">tolower</span>(egg_data<span class="op">$</span>animal)</a></code></pre></div>
 </div>
 <div id="find-the-species-in-ott" class="section level3">
 <h3>Find the species in OTT</h3>
 <p>We can use the OTL synthesis tree to relate these species. To do so we first need to find Open Tree Taxonomy (OTT) IDs for each species. We can do that with the Taxonomic Name Resolution Service function <code>tnrs_match_names</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="kw">unique</span>(egg_data<span class="op">$</span>animal), <span class="dt">context=</span><span class="st">&quot;Animals&quot;</span>)
-<span class="kw">head</span>(taxa)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="kw">unique</span>(egg_data<span class="op">$</span>animal), <span class="dt">context=</span><span class="st">&quot;Animals&quot;</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">head</span>(taxa)</a></code></pre></div>
 <pre><code>##            search_string            unique_name approximate_match ott_id
 ## 1 zonotrichia_leucophrys Zonotrichia leucophrys              TRUE 265553
 ## 2      passer_domesticus      Passer domesticus              TRUE 745175
@@ -150,20 +381,36 @@ egg_data<span class="op">$</span>animal &lt;-<span class="st"> </span><span clas
 ## 5      FALSE                             2
 ## 6      FALSE                             1</code></pre>
 <p>All of these species are in OTT, but a few of them go by different names in the Open Tree than we have in our data set. Because the tree <code>rotl</code> fetches will have Open Tree names, we need to create a named vector that maps the names we have for each species to the names Open Tree uses for them:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxon_map &lt;-<span class="st"> </span><span class="kw">structure</span>(taxa<span class="op">$</span>search_string, <span class="dt">names=</span>taxa<span class="op">$</span>unique_name)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">taxon_map &lt;-<span class="st"> </span><span class="kw">structure</span>(taxa<span class="op">$</span>search_string, <span class="dt">names=</span>taxa<span class="op">$</span>unique_name)</a></code></pre></div>
 <p>Now we can use this map to retrieve “data set names” from “OTT names”:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">taxon_map[<span class="st">&quot;Anser caerulescens&quot;</span>]</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">taxon_map[<span class="st">&quot;Anser caerulescens&quot;</span>]</a></code></pre></div>
 <pre><code>##  Anser caerulescens 
 ## &quot;chen_caerulescens&quot;</code></pre>
 </div>
 <div id="get-a-tree" class="section level3">
 <h3>Get a tree</h3>
 <p>Now we can get the tree. There are really too many tips here to show nicely, so we will leave them out of this plot</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa)[<span class="kw">is_in_tree</span>(<span class="kw">ott_id</span>(taxa))])</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa)[<span class="kw">is_in_tree</span>(<span class="kw">ott_id</span>(taxa))])</a></code></pre></div>
 <pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Sarcopterygii ott458402, Dipnotetrapodomorpha ott4940726,
-## Tetrapoda ott229562, Amniota ott229560, Sauropsida ott639642, Sauria
-## (order in Opisthokonta) ott329823, Archelosauria ott4947372, Archosauria
+## with labels: mrcaott24ott6612, Lophotrochozoa ott155737, mrcaott24ott56,
+## mrcaott56ott5497, Mollusca ott802117, mrcaott56ott1881, mrcaott56ott1589,
+## Bivalvia ott1025545, mrcaott2556ott10806, mrcaott2556ott6150, Pteriomorphia
+## ott1025543, mrcaott2556ott2567, mrcaott2567ott26482, Pterioida ott307066,
+## Pterioidea ott713805, Pteriidae ott645953, Pteria ott892317, Ecdysozoa
+## ott611099, Panarthropoda ott816442, Arthropoda ott632179, Mandibulata
+## ott985907, Pancrustacea ott985906, mrcaott87ott704, mrcaott704ott4932,
+## Copepoda ott461528, Neocopepoda ott754178, mrcaott4932ott12421,
+## mrcaott12421ott92630, mrcaott12421ott14254, Harpacticoida ott604252,
+## mrcaott14254ott2953829, mrcaott14254ott296853, mrcaott14254ott535412,
+## mrcaott14254ott14257, mrcaott14254ott14260, mrcaott14254ott129252,
+## mrcaott14254ott41175, mrcaott14254ott586975, Harpacticidae ott639300, Zaus
+## ott14256, Deuterostomia ott147604, Chordata ott125642, mrcaott42ott658,
+## Craniata (subphylum in Deuterostomia) ott947318, Vertebrata (subphylum
+## in Opisthokonta) ott801601, Gnathostomata (superclass in phylum
+## Chordata) ott278114, Teleostomi ott114656, Euteleostomi ott114654,
+## Sarcopterygii ott458402, Dipnotetrapodomorpha ott4940726, Tetrapoda
+## ott229562, Amniota ott229560, Sauropsida ott639642, Sauria (order
+## in Opisthokonta) ott329823, Archelosauria ott4947372, Archosauria
 ## ott335588, Dinosauria ott90215, Coelurosauria ott664351, Theropoda
 ## ott664350, Saurischia ott90223, Aves ott81461, mrcaott246ott5481,
 ## mrcaott246ott7145, mrcaott246ott928360, mrcaott246ott1858,
@@ -236,25 +483,25 @@ egg_data<span class="op">$</span>animal &lt;-<span class="st"> </span><span clas
 ## mrcaott7639ott279504, mrcaott7639ott47401, mrcaott7639ott341047,
 ## mrcaott7639ott234666, mrcaott7639ott966608, mrcaott7639ott285543,
 ## Sterna ott16767, mrcaott285543ott341030, mrcaott285543ott738509,
-## mrcaott285543ott966606, mrcaott285543ott966604, mrcaott22965ott738512,
-## mrcaott22965ott80679, mrcaott22965ott5859768, mrcaott22965ott154126,
-## mrcaott22965ott241571, mrcaott22965ott282132, mrcaott22965ott414141,
-## mrcaott22965ott704174, mrcaott22965ott704175, mrcaott22965ott324050,
-## mrcaott22965ott353849, mrcaott22965ott75913, mrcaott75913ott335736,
-## mrcaott335737ott450107, mrcaott425206ott887691, mrcaott425206ott515355,
-## mrcaott119599ott993041, mrcaott119599ott509055, mrcaott416082ott4947414,
-## mrcaott147723ott219032, Stercorariidae ott168297, Stercorarius ott742632,
-## mrcaott742640ott742641, mrcaott57823ott57827, mrcaott57823ott242771,
-## mrcaott57823ott112937, mrcaott112937ott129402, mrcaott112937ott341980,
-## mrcaott112937ott112941, mrcaott112941ott112948, mrcaott112948ott5341357,
-## mrcaott112948ott242776, mrcaott242776ott313115, mrcaott242776ott704464,
-## mrcaott242776ott331994, mrcaott331994ott413796, mrcaott9830ott86672,
-## mrcaott9830ott90560, mrcaott9830ott324158, mrcaott9830ott55044,
-## mrcaott9830ott285638, mrcaott9830ott117726, Sulidae ott452462,
-## mrcaott403772ott429615, Sula ott160486, mrcaott429615ott5859716,
-## mrcaott429615ott827441, mrcaott429615ott1030312, Procellariiformes
-## ott452461, mrcaott18206ott31011, mrcaott31011ott71459, Diomedeidae
-## ott85277, mrcaott71459ott320282, Phoebastria ott941509,
+## mrcaott285543ott5560401, mrcaott285543ott966606, mrcaott285543ott966604,
+## mrcaott22965ott738512, mrcaott22965ott80679, mrcaott22965ott5859768,
+## mrcaott22965ott154126, mrcaott22965ott241571, mrcaott22965ott282132,
+## mrcaott22965ott414141, mrcaott22965ott704174, mrcaott22965ott704175,
+## mrcaott22965ott324050, mrcaott22965ott353849, mrcaott22965ott75913,
+## mrcaott75913ott335736, mrcaott335737ott450107, mrcaott425206ott887691,
+## mrcaott425206ott515355, mrcaott119599ott993041, mrcaott119599ott509055,
+## mrcaott416082ott4947414, mrcaott147723ott219032, Stercorariidae ott168297,
+## Stercorarius ott742632, mrcaott742640ott742641, mrcaott57823ott57827,
+## mrcaott57823ott242771, mrcaott57823ott112937, mrcaott112937ott129402,
+## mrcaott112937ott341980, mrcaott112937ott112941, mrcaott112941ott112948,
+## mrcaott112948ott5341357, mrcaott112948ott242776, mrcaott242776ott313115,
+## mrcaott242776ott704464, mrcaott242776ott331994, mrcaott331994ott413796,
+## mrcaott9830ott86672, mrcaott9830ott90560, mrcaott9830ott324158,
+## mrcaott9830ott55044, mrcaott9830ott285638, mrcaott9830ott117726,
+## Sulidae ott452462, mrcaott403772ott429615, Sula ott160486,
+## mrcaott429615ott5859716, mrcaott429615ott827441, mrcaott429615ott1030312,
+## Procellariiformes ott452461, mrcaott18206ott31011, mrcaott31011ott71459,
+## Diomedeidae ott85277, mrcaott71459ott320282, Phoebastria ott941509,
 ## mrcaott320282ott320284, Sphenisciformes ott494366, mrcaott60413ott60417,
 ## mrcaott60413ott429618, Eudyptes ott494364, mrcaott82219ott116946,
 ## mrcaott116946ott219197, mrcaott134466ott494361, Pygoscelis ott494365,
@@ -264,59 +511,42 @@ egg_data<span class="op">$</span>animal &lt;-<span class="st"> </span><span clas
 ## mrcaott169265ott550039, mrcaott169265ott462546, mrcaott462546ott626955,
 ## mrcaott462546ott549514, mrcaott549514ott3596314, mrcaott549514ott3596309,
 ## mrcaott549514ott550040, mrcaott549514ott3596308, mrcaott549514ott3596307,
-## mrcaott549514ott3596306, mrcaott549514ott792626, mrcaott17146ott57819,
-## Columbiformes ott363030, mrcaott17146ott45505, mrcaott45505ott50388,
-## mrcaott45505ott506098, mrcaott45505ott51607, mrcaott51607ott277822,
-## mrcaott51607ott67614, mrcaott51607ott244134, Columba ott938415,
-## mrcaott51607ott277817, mrcaott277817ott320359, mrcaott320359ott493986,
-## mrcaott320359ott767317, mrcaott320359ott921832, mrcaott320359ott938416,
-## Galliformes ott837585, mrcaott4765ott75785, mrcaott4765ott104461,
-## mrcaott4765ott151684, mrcaott4765ott54193, mrcaott4765ott49319,
-## mrcaott4765ott415487, mrcaott4765ott51354, mrcaott4765ott446490,
-## Tetraoninae ott999677, mrcaott4765ott55929, mrcaott4765ott539045,
-## mrcaott4765ott234824, Centrocercus ott728081, mrcaott53700ott572162,
-## mrcaott53700ott466627, mrcaott53700ott309383, mrcaott53700ott102722,
-## mrcaott102722ott137547, Phasianus ott102718, mrcaott49310ott102705,
-## mrcaott49310ott153554, mrcaott153554ott867027, Gallus ott153562,
-## mrcaott153554ott153572, mrcaott153572ott240568, mrcaott51349ott727334,
-## mrcaott51349ott453575, Pavo ott453587, Anseriformes ott241841,
-## Anatidae ott765193, mrcaott30843ott962771, mrcaott30843ott145504,
-## mrcaott30843ott30847, mrcaott30843</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tr, <span class="dt">show.tip.label=</span><span class="ot">FALSE</span>)</code></pre></div>
-<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+## mrcaott549514ott3596306, mrcaott549514ott</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">plot</span>(tr, <span class="dt">show.tip.label=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="data:image/png;base64,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ONxsx7ajRrU8I6ng8vTUlXrZc0zejdBKmqeCa+WppXm3Mixp1jOREyLyvKQJKDi61C56/4/2Jew3DUSUWMOp4PJSBa888oSEco/zOQhRYg2ngstLFaxTdtpHBbecCm652ckngM+5tPpAVB+RSQWXtz/5zO/LPxz+bHPvXpU7TQMRMdxMKrii/i66f7fZz5lmIGKemVRwRbp8tOXOOzWcq3O47vjeUt/ZEc62m9YzG9pNu+iWm1oa3qq8xLQYcbOkqOA4fto72PB/psWImyVFBdcAiLNVcA2AOFsF1wCIs1VwHA/0TrqzvRpG3CwpKjiO/mmz/2BajLhZUlRwHLV9HfzPrx28DEPKq+2lK19eN3ghlZQ3v64Xn0kctd1FSxzzexeA32JajLhZhODe3i0cdpsWI24WqRt4BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQLngHEC54BxAueAcQrj8CaaJ5WOQj8e0AAAAASUVORK5CYII=" style="display: block; margin: auto;" /></p>
 <p>There are a few things to note here. First, the tree has no branch lengths. At present this is true for the whole of the Open Tree synthetic tree. Some comparative methods require either branch lengths or an ultrametric tree. Before you can use one of those methods you will need to get a tree with branch lengths. You could try looking for published trees made available by the Open Tree with <code>studies_find_trees</code>. Alternatively, you could estimate branch lengths from the toplogy of a phylogeny returned by <code>tol_induced_subtree</code>, perhaps by downloading DNA sequences from the NCBI with <code>rentrez</code> or “hanging” the tree on nodes of known-age using penalized likelihood method in <code>ape::chronos</code>. In this case, we will use only the topology of the tree as input to our comparative analysis, so we can skip these steps.</p>
 <p>Second, the tip labels contain OTT IDs, which means they will not perfectly match the species names in our dataset or the taxon map that we created earlier:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tr<span class="op">$</span>tip.label[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
-<pre><code>## [1] &quot;Ficedula_albicollis_ott107840&quot; &quot;Luscinia_svecica_ott274225&quot;   
-## [3] &quot;Turdus_merula_ott568572&quot;       &quot;Sturnus_unicolor_ott366470&quot;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">tr<span class="op">$</span>tip.label[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] &quot;Pteria_hirundo_ott112607&quot;      &quot;Zaus_caeruleus_ott14254&quot;      
+## [3] &quot;Ficedula_albicollis_ott107840&quot; &quot;Luscinia_svecica_ott274225&quot;</code></pre>
 <p>Finally, the tree contains node labels for those nodes that match a higher taxonomic group, and empty character vectors (<code>&quot;&quot;</code>) for all other nodes. Some comparative methods either do no expect node labels at all, or require all labeled nodes to have a unique name (meaning multiple “empty” labels will cause and error).</p>
 <p>We can deal with all these details easily. <code>rotl</code> provides the convenience function <code>strip_ott_ids</code> to remove the extra information from the tip labels. With the IDs removed, we can use our taxon map to replace the tip labels in the tree with the species names from dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">otl_tips &lt;-<span class="st"> </span><span class="kw">strip_ott_ids</span>(tr<span class="op">$</span>tip.label, <span class="dt">remove_underscores=</span><span class="ot">TRUE</span>)
-tr<span class="op">$</span>tip.label &lt;-<span class="st"> </span>taxon_map[ otl_tips ]</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">otl_tips &lt;-<span class="st"> </span><span class="kw">strip_ott_ids</span>(tr<span class="op">$</span>tip.label, <span class="dt">remove_underscores=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">tr<span class="op">$</span>tip.label &lt;-<span class="st"> </span>taxon_map[ otl_tips ]</a></code></pre></div>
 <p>Finally, we can remove the node labels by setting the <code>node.label</code> attribute of the tree to <code>NULL</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tr<span class="op">$</span>node.label &lt;-<span class="st"> </span><span class="ot">NULL</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">egg_data &lt;-<span class="st"> </span>egg_data[egg_data<span class="op">$</span>animal <span class="op">%in%</span><span class="st"> </span>tr<span class="op">$</span>tip.label, ]</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">tr<span class="op">$</span>node.label &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">egg_data &lt;-<span class="st"> </span>egg_data[egg_data<span class="op">$</span>animal <span class="op">%in%</span><span class="st"> </span>tr<span class="op">$</span>tip.label, ]</a></code></pre></div>
 </div>
 <div id="perform-the-meta-analysis" class="section level3">
 <h3>Perform the meta-analysis</h3>
 <p>Now we have data and a tree, and we know the names in the tree match the ones in the data. It’s time to do the comparative analysis. Rutkowska <em>et al</em>. used <code>MCMCglmm</code>, a Bayesian MCMC approach to fitting multi-level models,to perform their meta-analysis, and we will do the same. Of course, to properly analyse these data you would take some care in deciding on the appropriate priors to use and inspect the results carefully. In this case, we are really interested in using this as a demonstration, so we will just run a simple model.</p>
 <p>Specifically we sill fit a model where the only variable that might explain the values of <code>Zr</code> is the random factor <code>animal</code>, which corresponds to the phylogenetic relationships among species. We also provide <code>Zvr</code> as the measurement error variance, effectively adding extra weight to the results of more powerful studies. Here’s how we specify and fit that model with <code>MCMCglmm</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
-<span class="cf">if</span> (<span class="kw">require</span>(MCMCglmm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
-
-    pr &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">R=</span><span class="kw">list</span>(<span class="dt">V=</span><span class="dv">1</span>,<span class="dt">nu=</span><span class="fl">0.002</span>),
-               <span class="dt">G=</span><span class="kw">list</span>(<span class="dt">G1=</span><span class="kw">list</span>(<span class="dt">V=</span><span class="dv">1</span>,<span class="dt">nu=</span><span class="fl">0.002</span>))
-               )
-
-    model &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(Zr<span class="op">~</span><span class="dv">1</span>,<span class="dt">random=</span><span class="op">~</span>animal,
-                      <span class="dt">pedigree=</span>tr,
-                      <span class="dt">mev=</span>egg_data<span class="op">$</span>VZr,
-                      <span class="dt">prior=</span>pr,
-                      <span class="dt">data=</span>egg_data,
-                      <span class="dt">verbose=</span><span class="ot">FALSE</span>)
-} <span class="cf">else</span> {
-    model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="dt">file =</span> <span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;mcmcglmm_model.rds&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;rotl&quot;</span>))
-}</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">123</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="cf">if</span> (<span class="kw">require</span>(MCMCglmm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">    pr &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">R=</span><span class="kw">list</span>(<span class="dt">V=</span><span class="dv">1</span>,<span class="dt">nu=</span><span class="fl">0.002</span>),</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">               <span class="dt">G=</span><span class="kw">list</span>(<span class="dt">G1=</span><span class="kw">list</span>(<span class="dt">V=</span><span class="dv">1</span>,<span class="dt">nu=</span><span class="fl">0.002</span>))</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">               )</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">    model &lt;-<span class="st"> </span><span class="kw">MCMCglmm</span>(Zr<span class="op">~</span><span class="dv">1</span>,<span class="dt">random=</span><span class="op">~</span>animal,</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9">                      <span class="dt">pedigree=</span>tr,</a>
+<a class="sourceLine" id="cb19-10" data-line-number="10">                      <span class="dt">mev=</span>egg_data<span class="op">$</span>VZr,</a>
+<a class="sourceLine" id="cb19-11" data-line-number="11">                      <span class="dt">prior=</span>pr,</a>
+<a class="sourceLine" id="cb19-12" data-line-number="12">                      <span class="dt">data=</span>egg_data,</a>
+<a class="sourceLine" id="cb19-13" data-line-number="13">                      <span class="dt">verbose=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb19-14" data-line-number="14">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb19-15" data-line-number="15">    model &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="dt">file =</span> <span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;mcmcglmm_model.rds&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;rotl&quot;</span>))</a>
+<a class="sourceLine" id="cb19-16" data-line-number="16">}</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: 'ape'</code></pre>
 <pre><code>## The following object is masked from 'package:phylobase':
@@ -327,10 +557,10 @@ tr<span class="op">$</span>tip.label &lt;-<span class="st"> </span>taxon_map[ ot
 <pre><code>## Warning: 'cBind' is deprecated.
 ##  Since R version 3.2.0, base's cbind() should work fine with S4 objects</code></pre>
 <p>Now that we have a result we can find out how much phylogenetic signal exists for sex-biased differences in egg-size. In a multi-level model we can use variance components to look at this, specifically the proportion of the total variance that can be explained by phylogeny is called the phylogenetic reliability, <em>H</em>. Let’s calculate the <em>H</em> for this model:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">var_comps &lt;-<span class="st"> </span><span class="kw">colMeans</span>(model<span class="op">$</span>VCV )
-var_comps[<span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(var_comps)</code></pre></div>
-<pre><code>##     animal 
-## 0.00279324</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">var_comps &lt;-<span class="st"> </span><span class="kw">colMeans</span>(model<span class="op">$</span>VCV )</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">var_comps[<span class="st">&quot;animal&quot;</span>] <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(var_comps)</a></code></pre></div>
+<pre><code>##      animal 
+## 0.002399979</code></pre>
 <p>It appears there is almost no phylogenetic signal to the data. The relationships among species explain much less that one percent of the total variance in the data. If you were wondering, Rutkowska <em>et al</em>. report a similar result, even after adding more predictors to their model most of the variance in <code>Zr</code> was left unexplained.</p>
 </div>
 </div>
