@@ -22,7 +22,11 @@ plot(1/sqrt(egg_data$VZr), egg_data$Zr, pch=16,
 
 ## ---- clean_eggs---------------------------------------------------------
 egg_data <- as.data.frame(egg_data)
+## Convert taxon names to lower case
 egg_data$animal <- tolower(egg_data$animal)
+## Let's remove the underscores (_) from the taxon names
+egg_data$animal <- gsub("_", " ", egg_data$animal)
+
 
 ## ----birds---------------------------------------------------------------
 taxa <- tnrs_match_names(unique(egg_data$animal), context="Animals")
