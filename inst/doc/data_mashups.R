@@ -1,6 +1,6 @@
 ## ---- data---------------------------------------------------------------
 csv_path <- system.file("extdata", "protist_mutation_rates.csv", package = "rotl")
-mu <- read.csv(csv_path, stringsAsFactors=FALSE)
+mu <- read.csv(csv_path, stringsAsFactors = FALSE)
 mu
 
 ## ---- context------------------------------------------------------------
@@ -8,7 +8,7 @@ library(rotl)
 tnrs_contexts()
 
 ## ---- match--------------------------------------------------------------
-taxon_search <- tnrs_match_names(names=mu$species, context_name="All life")
+taxon_search <- tnrs_match_names(names = mu$species, context_name = "All life")
 knitr::kable(taxon_search)
 
 ## ---- munge--------------------------------------------------------------
@@ -19,10 +19,10 @@ mu$ott_id <- taxon_search$ott_id
 studies_properties()
 
 ## ----taxon_count---------------------------------------------------------
-studies_find_trees(property="ot:ottId", value=as.character(ott_id(taxon_search)[1]))
+studies_find_trees(property = "ot:ottId", value = as.character(ott_id(taxon_search)[1]))
 
 ## ---- all_taxa_count-----------------------------------------------------
-hits <- lapply(mu$ott_id, studies_find_trees, property="ot:ottId", detailed = FALSE)
+hits <- lapply(mu$ott_id, studies_find_trees, property = "ot:ottId", detailed = FALSE)
 sapply(hits, function(x) sum(x[["n_matched_trees"]]))
 
 ## ----subtree,  fig.width=7, fig.height=4---------------------------------
@@ -35,7 +35,7 @@ mu$ott_name[1]
 tr$tip.label[4]
 
 ## ---- sub----------------------------------------------------------------
-tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores=TRUE)
+tr$tip.label <- strip_ott_ids(tr$tip.label, remove_underscores = TRUE)
 tr$tip.label %in% mu$ott_name
 
 ## ----phylobase-----------------------------------------------------------
@@ -48,17 +48,20 @@ tree_data <- phylo4d(tr, mu_numeric)
 plot(tree_data)
 
 ## ------------------------------------------------------------------------
-extra_data <- try(study_external_IDs("pg_1980"), silent=TRUE)
-if (!inherits(extra_data, "try-error"))
+extra_data <- try(study_external_IDs("pg_1980"), silent = TRUE)
+if (!inherits(extra_data, "try-error")) {
   extra_data
+}
 
 ## ------------------------------------------------------------------------
 library(rentrez)
-seqs <- try(entrez_fetch(db="nucleotide", id=extra_data$nucleotide_ids[1:2], rettype="fasta"), silent = TRUE)
+seqs <- try(entrez_fetch(db = "nucleotide", id = extra_data$nucleotide_ids[1:2], rettype = "fasta"), silent = TRUE)
 
 if (inherits(seqs, "try-error")) {
   cat("NCBI temporarily down.")
-} else cat(seqs)
+} else {
+  cat(seqs)
+}
 
 ## ------------------------------------------------------------------------
 Tt_ids <- taxon_external_IDs(mu$ott_id[2])
