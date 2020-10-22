@@ -160,12 +160,12 @@ print.study_ids <- function(x, ...) {
 ##' @importFrom stats setNames
 ##' @examples
 ##' \dontrun{
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophila",
 ##'                           detailed=FALSE)
 ##' ## summary of the trees and associated studies that match this criterion
 ##' res
 ##' ## With metadata about the studies (default)
-##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophilia",
+##' res <- studies_find_trees(property="ot:ottTaxonName", value="Drosophila",
 ##'                           detailed=TRUE)
 ##' ## The list of trees for each study that match the search criteria
 ##' list_trees(res)
@@ -222,7 +222,7 @@ studies_find_trees <- function(property = NULL, value = NULL, verbose = FALSE,
 ##' Returns the trees associated with a given study
 ##'
 ##' If \code{file_format} is missing, the function returns an object
-##' of the class \code{phylo} from the \code{\link[ape]{ape}} package
+##' of the class \code{phylo} from the \code{ape} package
 ##' (default), or an object of the class \code{nexml} from the
 ##' \code{RNeXML} package.
 ##'
@@ -297,7 +297,7 @@ get_study <- function(study_id = NULL, object_format = c("phylo", "nexml"),
 ##' @param tree_id the identifier of a tree within the study
 ##' @param object_format the class of the object to be returned
 ##'     (default and currently only possible value \code{phylo} from
-##'     the \code{\link[ape]{ape}} package).
+##'     the \code{ape} package).
 ##' @param tip_label the format of the tip
 ##'     labels. \dQuote{\code{original_label}} (default) returns the
 ##'     original labels as provided in the study,
@@ -432,7 +432,7 @@ print.study_meta <- function(x, ...) {
 ##' @param tree_id the tree identifier (character)
 ##' @param object_format the class of the object returned by the
 ##'     function (default, and currently only possibility \code{phylo}
-##'     from the \code{\link[ape]{ape}} package)
+##'     from the \code{ape} package)
 ##' @param tip_label the format of the tip
 ##'     labels. \dQuote{\code{original_label}} (default) returns the
 ##'     original labels as provided in the study,

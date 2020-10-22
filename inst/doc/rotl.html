@@ -1,46 +1,130 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <meta name="author" content="François Michonneau" />
 
-<meta name="date" content="2019-09-28" />
+<meta name="date" content="2020-10-22" />
 
 <title>How to use rotl?</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      pre > code.sourceCode { white-space: pre; position: relative; }
+      pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      pre > code.sourceCode > span:empty { height: 1.2em; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      pre > code.sourceCode { white-space: pre-wrap; }
+      pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          color: #aaaaaa;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+      div.sourceCode
+        {   }
+      @media screen {
+      pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+      code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+      code span.at { color: #7d9029; } /* Attribute */
+      code span.bn { color: #40a070; } /* BaseN */
+      code span.bu { } /* BuiltIn */
+      code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+      code span.ch { color: #4070a0; } /* Char */
+      code span.cn { color: #880000; } /* Constant */
+      code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+      code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+      code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+      code span.dt { color: #902000; } /* DataType */
+      code span.dv { color: #40a070; } /* DecVal */
+      code span.er { color: #ff0000; font-weight: bold; } /* Error */
+      code span.ex { } /* Extension */
+      code span.fl { color: #40a070; } /* Float */
+      code span.fu { color: #06287e; } /* Function */
+      code span.im { } /* Import */
+      code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+      code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+      code span.op { color: #666666; } /* Operator */
+      code span.ot { color: #007020; } /* Other */
+      code span.pp { color: #bc7a00; } /* Preprocessor */
+      code span.sc { color: #4070a0; } /* SpecialChar */
+      code span.ss { color: #bb6688; } /* SpecialString */
+      code span.st { color: #4070a0; } /* String */
+      code span.va { color: #19177c; } /* Variable */
+      code span.vs { color: #4070a0; } /* VerbatimString */
+      code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -49,9 +133,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -305,7 +389,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">How to use rotl?</h1>
 <h4 class="author">François Michonneau</h4>
-<h4 class="date">2019-09-28</h4>
+<h4 class="date">2020-10-22</h4>
 
 
 
@@ -355,11 +439,20 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="step-1-matching-taxonomy-to-the-ott_id" class="section level3">
 <h3>Step 1: Matching taxonomy to the <code>ott_id</code></h3>
 <p>Let’s start by doing a search on a diverse group of taxa: a tree frog (genus <em>Hyla</em>), a fish (genus <em>Salmo</em>), a sea urchin (genus <em>Diadema</em>), and a nautilus (genus <em>Nautilus</em>).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(rotl)</a>
-<a class="sourceLine" id="cb1-2" title="2">taxa &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Hyla&quot;</span>, <span class="st">&quot;Salmo&quot;</span>, <span class="st">&quot;Diadema&quot;</span>, <span class="st">&quot;Nautilus&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" title="3">resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">library</span>(rotl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>taxa &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Hyla&quot;</span>, <span class="st">&quot;Salmo&quot;</span>, <span class="st">&quot;Diadema&quot;</span>, <span class="st">&quot;Nautilus&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa)</span></code></pre></div>
 <p>It’s always a good idea to check that the resolved names match what you intended:</p>
 <table>
+<colgroup>
+<col width="16%" />
+<col width="14%" />
+<col width="21%" />
+<col width="9%" />
+<col width="13%" />
+<col width="7%" />
+<col width="17%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">search_string</th>
@@ -392,12 +485,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tr>
 <tr class="odd">
 <td align="left">diadema</td>
-<td align="left">Diadema (genus in Holozoa)</td>
+<td align="left">Diadema</td>
 <td align="left">FALSE</td>
-<td align="right">631176</td>
+<td align="right">4930522</td>
 <td align="left">FALSE</td>
 <td align="left"></td>
-<td align="right">5</td>
+<td align="right">4</td>
 </tr>
 <tr class="even">
 <td align="left">nautilus</td>
@@ -411,40 +504,39 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tbody>
 </table>
 <p>The column <code>unique_name</code> sometimes indicates the higher taxonomic level associated with the name. The column <code>number_matches</code> indicates the number of <code>ott_id</code> that corresponds to a given name. In this example, our search on <em>Diadema</em> returns 2 matches, and the one returned by default is indeed the sea urchin that we want for our query. The argument <code>context_name</code> allows you to limit the taxonomic scope of your search. <em>Diadema</em> is also the genus name of a fungus. To ensure that our search is limited to animal names, we could do:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa, <span class="dt">context_name =</span> <span class="st">&quot;Animals&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa, <span class="dt">context_name =</span> <span class="st">&quot;Animals&quot;</span>)</span></code></pre></div>
 <p>If you are trying to build a tree with deeply divergent taxa that the argument <code>context_name</code> cannot fix, see “How to change the ott ids assigned to my taxa?” in the FAQ below.</p>
 </div>
 <div id="step-2-getting-the-tree-corresponding-to-our-taxa" class="section level3">
 <h3>Step 2: Getting the tree corresponding to our taxa</h3>
 <p>Now that we have the correct <code>ott_id</code> for our taxa, we can ask for the tree using the <code>tol_induced_subtree()</code> function. By default, the object returned by <code>tol_induced_subtree</code> is a phylo object (from the <a href="https://cran.r-project.org/package=ape">ape</a> package), so we can plot it directly.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">my_tree &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="dt">ott_ids =</span> resolved_names<span class="op">$</span>ott_id)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>my_tree &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="dt">ott_ids =</span> resolved_names<span class="op">$</span>ott_id)</span></code></pre></div>
 <pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Protostomia ott189832, mrcaott24ott6612, Lophotrochozoa
-## ott155737, mrcaott24ott56, mrcaott56ott5497, Mollusca ott802117,
-## mrcaott56ott1881, mrcaott1881ott102410, Cephalopoda ott7368, Nautiloidea
-## ott854446, Nautilida ott854452, Nautilidae ott616361, Chordata ott125642,
-## mrcaott42ott658, Craniata (subphylum in Deuterostomia) ott947318,
-## Vertebrata (subphylum in Opisthokonta) ott801601, Gnathostomata (superclass
-## in phylum Chordata) ott278114, Teleostomi ott114656, Sarcopterygii
-## ott458402, Dipnotetrapodomorpha ott4940726, Tetrapoda ott229562, Amphibia
-## ott544595, Batrachia ott471197, Anura (order in Opisthokonta) ott991547,
+## with labels: Chordata ott125642, mrcaott42ott658, Craniata (subphylum in
+## Deuterostomia) ott947318, Vertebrata (subphylum in Deuterostomia) ott801601,
+## Gnathostomata (superclass in phylum Chordata) ott278114, Teleostomi
+## ott114656, Sarcopterygii ott458402, Dipnotetrapodomorpha ott4940726,
+## Tetrapoda ott229562, Amphibia ott544595, Batrachia ott471197, Anura ott991547,
 ## mrcaott114ott3129, mrcaott114ott37876, mrcaott114ott18818, Neobatrachia
 ## ott535804, mrcaott114ott309463, mrcaott114ott177, mrcaott177ott7464,
-## mrcaott177ott2199, mrcaott177ott29310, mrcaott177ott1321, Hylidae
-## ott535782, mrcaott177ott17126, mrcaott177ott22852, mrcaott177ott2732,
-## mrcaott2732ott3289, mrcaott3289ott40328, mrcaott3289ott173489,
-## mrcaott3289ott110534, mrcaott3289ott489758, mrcaott3289ott59160,
-## Actinopterygii ott773483, Actinopteri ott285821, Neopterygii
-## ott471203, Teleostei ott212201, Osteoglossocephalai ott5506109,
-## Clupeocephala ott285819, Euteleosteomorpha ott5517919, mrcaott274ott392,
-## mrcaott274ott595, Protacanthopterygii ott1024043, mrcaott274ott3887,
-## mrcaott3887ott9371, Salmoniformes ott216171, Salmonidae ott739933,
-## mrcaott3887ott28511, Salmoninae ott936925, mrcaott360ott10516,
-## Echinodermata ott451020, Eleutherozoa ott317277, Echinozoa ott669475,
-## Echinoidea ott669472, Diadematacea ott631171, Diadematoida ott631174,
-## Diadematidae ott631173</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">plot</span>(my_tree, <span class="dt">no.margin =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+## mrcaott177ott2199, mrcaott177ott29310, mrcaott177ott1321, Hylidae ott535782,
+## mrcaott177ott17126, mrcaott177ott43017, mrcaott177ott2732, mrcaott2732ott3289,
+## mrcaott3289ott40328, mrcaott3289ott173489, mrcaott3289ott110534,
+## mrcaott3289ott489758, mrcaott3289ott59160, Actinopterygii ott773483,
+## Actinopteri ott285821, Neopterygii ott471203, Teleostei ott212201,
+## Osteoglossocephalai ott5506109, Clupeocephala ott285819, Euteleosteomorpha
+## ott5517919, mrcaott274ott392, mrcaott274ott595, Protacanthopterygii ott1024043,
+## mrcaott274ott3887, mrcaott3887ott9371, Salmoniformes ott216171, Salmonidae
+## ott739933, mrcaott3887ott28511, Salmoninae ott936925, mrcaott31485ott79094,
+## mrcaott360ott10516, Echinodermata ott451020, Eleutherozoa ott317277, Echinozoa
+## ott669475, Echinoidea ott669472, mrcaott360ott26831, mrcaott360ott3985,
+## mrcaott360ott367, mrcaott360ott362, Acroechinoidea ott5677511, Diadematoida
+## ott631174, Diadematidae ott631173, Protostomia ott189832, mrcaott49ott6612,
+## Lophotrochozoa ott155737, mrcaott56ott519, mrcaott56ott5497, Mollusca ott802117,
+## mrcaott56ott1881, mrcaott1881ott102410, Cephalopoda ott7368, Nautiloidea
+## ott854446, Nautilida ott854452, Nautilidae ott616361</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">plot</span>(my_tree, <span class="dt">no.margin =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 </div>
 <div id="faq" class="section level2">
@@ -453,43 +545,50 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <h3>How to change the ott ids assigned to my taxa?</h3>
 <p>If you realize that <code>tnrs_match_names</code> assigns the incorrect taxonomic group to your name (e.g., because of synonymy) and changing the <code>context_name</code> does not help, you can use the function <code>inspect</code>. This function takes the object resulting from <code>tnrs_match_names()</code>, and either the row number, the taxon name (you used in your search in lowercase), or the <code>ott_id</code> returned by the initial query.</p>
 <p>To illustrate this, let’s re-use the previous query but this time pretending that we are interested in the fungus <em>Diadema</em> and not the sea urchin:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">taxa &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Hyla&quot;</span>, <span class="st">&quot;Salmo&quot;</span>, <span class="st">&quot;Diadema&quot;</span>, <span class="st">&quot;Nautilus&quot;</span>)</a>
-<a class="sourceLine" id="cb6-2" title="2">resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa)</a>
-<a class="sourceLine" id="cb6-3" title="3">resolved_names</a></code></pre></div>
-<pre><code>##   search_string                unique_name approximate_match  ott_id
-## 1          hyla                       Hyla             FALSE 1062216
-## 2         salmo                      Salmo             FALSE  982359
-## 3       diadema Diadema (genus in Holozoa)             FALSE  631176
-## 4      nautilus                   Nautilus             FALSE  616358
-##   is_synonym flags number_matches
-## 1      FALSE                    1
-## 2      FALSE                    1
-## 3      FALSE                    5
-## 4      FALSE                    1</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">inspect</span>(resolved_names, <span class="dt">taxon_name =</span> <span class="st">&quot;diadema&quot;</span>)</a></code></pre></div>
-<pre><code>##   search_string                       unique_name approximate_match
-## 1       diadema    Diadema (genus in Nucletmycea)             FALSE
-## 2       diadema        Diadema (genus in Holozoa)             FALSE
-## 3       diadema Garrettia (genus in Opisthokonta)             FALSE
-## 4       diadema                       Diademoides             FALSE
-## 5       diadema                        Hypolimnas             FALSE
-##    ott_id is_synonym          flags number_matches
-## 1 4930522      FALSE                             5
-## 2  631176      FALSE                             5
-## 3 6356093       TRUE                             5
-## 4 4024672       TRUE SIBLING_HIGHER              5
-## 5  643831       TRUE                             5</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a>taxa &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Hyla&quot;</span>, <span class="st">&quot;Salmo&quot;</span>, <span class="st">&quot;Diadema&quot;</span>, <span class="st">&quot;Nautilus&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>resolved_names &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(taxa)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a>resolved_names</span></code></pre></div>
+<pre><code>##   search_string unique_name approximate_match  ott_id is_synonym flags
+## 1          hyla        Hyla             FALSE 1062216      FALSE      
+## 2         salmo       Salmo             FALSE  982359      FALSE      
+## 3       diadema     Diadema             FALSE 4930522      FALSE      
+## 4      nautilus    Nautilus             FALSE  616358      FALSE      
+##   number_matches
+## 1              1
+## 2              1
+## 3              4
+## 4              1</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">inspect</span>(resolved_names, <span class="dt">taxon_name =</span> <span class="st">&quot;diadema&quot;</span>)</span></code></pre></div>
+<pre><code>##   search_string                       unique_name approximate_match  ott_id
+## 1       diadema                           Diadema             FALSE 4930522
+## 2       diadema                       Diademoides             FALSE 4024672
+## 3       diadema Garrettia (genus in Opisthokonta)             FALSE  631176
+## 4       diadema                        Hypolimnas             FALSE  643831
+##   is_synonym          flags number_matches
+## 1      FALSE                             4
+## 2       TRUE sibling_higher              4
+## 3       TRUE                             4
+## 4       TRUE                             4</code></pre>
 <p>In our case, we want the second row in this data frame to replace the information that initially matched for <em>Diadema</em>. We can now use the <code>update()</code> function, to change to the correct taxa (the fungus not the sea urchin):</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">resolved_names &lt;-<span class="st"> </span><span class="kw">update</span>(resolved_names,</a>
-<a class="sourceLine" id="cb10-2" title="2">  <span class="dt">taxon_name =</span> <span class="st">&quot;diadema&quot;</span>,</a>
-<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">new_row_number =</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb10-4" title="4">)</a>
-<a class="sourceLine" id="cb10-5" title="5"></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co">## we could also have used the ott_id to replace this taxon:</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="co">## resolved_names &lt;- update(resolved_names, taxon_name = &quot;diadema&quot;,</span></a>
-<a class="sourceLine" id="cb10-8" title="8"><span class="co">##                          new_ott_id = 4930522)</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a>resolved_names &lt;-<span class="st"> </span><span class="kw">update</span>(resolved_names,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a>  <span class="dt">taxon_name =</span> <span class="st">&quot;diadema&quot;</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a>  <span class="dt">new_row_number =</span> <span class="dv">2</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true"></a><span class="co">## we could also have used the ott_id to replace this taxon:</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true"></a><span class="co">## resolved_names &lt;- update(resolved_names, taxon_name = &quot;diadema&quot;,</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true"></a><span class="co">##                          new_ott_id = 4930522)</span></span></code></pre></div>
 <p>And now our <code>resolved_names</code> data frame includes the taxon we want:</p>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="15%" />
+<col width="12%" />
+<col width="19%" />
+<col width="8%" />
+<col width="11%" />
+<col width="16%" />
+<col width="16%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">search_string</th>
@@ -522,12 +621,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </tr>
 <tr class="odd">
 <td align="left">diadema</td>
-<td align="left">Diadema (genus in Holozoa)</td>
+<td align="left">Diademoides</td>
 <td align="left">FALSE</td>
-<td align="right">631176</td>
-<td align="left">FALSE</td>
-<td align="left"></td>
-<td align="right">5</td>
+<td align="right">4024672</td>
+<td align="left">TRUE</td>
+<td align="left">sibling_higher</td>
+<td align="right">4</td>
 </tr>
 <tr class="even">
 <td align="left">nautilus</td>
@@ -544,95 +643,113 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="how-do-i-know-that-the-taxa-im-asking-for-is-the-correct-one" class="section level3">
 <h3>How do I know that the taxa I’m asking for is the correct one?</h3>
 <p>The function <code>taxonomy_taxon_info()</code> takes <code>ott_ids</code> as arguments and returns taxonomic information about the taxa. This output can be passed to some helpers functions to extract the relevant information. Let’s illustrate this with our <em>Diadema</em> example</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">diadema_info &lt;-<span class="st"> </span><span class="kw">taxonomy_taxon_info</span>(<span class="dv">631176</span>)</a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw">tax_rank</span>(diadema_info)</a></code></pre></div>
-<pre><code>## $`Diadema (genus in Holozoa)`
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a>diadema_info &lt;-<span class="st"> </span><span class="kw">taxonomy_taxon_info</span>(<span class="dv">631176</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">tax_rank</span>(diadema_info)</span></code></pre></div>
+<pre><code>## $`Garrettia (genus in Opisthokonta)`
 ## [1] &quot;genus&quot;
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;otl_rank&quot; &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">synonyms</span>(diadema_info)</a></code></pre></div>
-<pre><code>## $`Diadema (genus in Holozoa)`
-## [1] &quot;Centrechinus&quot;           &quot;Centrechinus (Diadema)&quot;
-## [3] &quot;Cidaris (Diadema)&quot;      &quot;Diamema&quot;               
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">synonyms</span>(diadema_info)</span></code></pre></div>
+<pre><code>## $`Garrettia (genus in Opisthokonta)`
+## [1] &quot;Diadema&quot;      &quot;Centrechinus&quot; &quot;Diamema&quot;     
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;otl_synonyms&quot; &quot;list&quot;</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">tax_name</span>(diadema_info)</a></code></pre></div>
-<pre><code>## $`Diadema (genus in Holozoa)`
-## [1] &quot;Diadema&quot;
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">tax_name</span>(diadema_info)</span></code></pre></div>
+<pre><code>## $`Garrettia (genus in Opisthokonta)`
+## [1] &quot;Garrettia&quot;
 ## 
 ## attr(,&quot;class&quot;)
 ## [1] &quot;otl_name&quot; &quot;list&quot;</code></pre>
 <p>In some cases, it might also be useful to investigate the taxonomic tree descending from an <code>ott_id</code> to check that it’s the correct taxon and to determine the species included in the Open Tree Taxonomy:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">diadema_tax_tree &lt;-<span class="st"> </span><span class="kw">taxonomy_subtree</span>(<span class="dv">631176</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2">diadema_tax_tree</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a>diadema_tax_tree &lt;-<span class="st"> </span><span class="kw">taxonomy_subtree</span>(<span class="dv">631176</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a>diadema_tax_tree</span></code></pre></div>
 <pre><code>## $tip_label
-##  [1] &quot;Diadema_sp._seto17_ott587478&quot;            
-##  [2] &quot;Diadema_sp._DSM1_ott219999&quot;              
-##  [3] &quot;Diadema_paucispinum_ott312263&quot;           
-##  [4] &quot;Diadema_mexicanum_ott639130&quot;             
-##  [5] &quot;Diadema_sp._dsm5_ott587480&quot;              
-##  [6] &quot;Diadema_sp._DSM8_ott587486&quot;              
-##  [7] &quot;Diadema_sp._DSM2_ott587483&quot;              
-##  [8] &quot;Diadema_sp._DSM6_ott771059&quot;              
-##  [9] &quot;Diadema_sp._DSM7_ott587487&quot;              
-## [10] &quot;Diadema_sp._seto18_ott66623&quot;             
-## [11] &quot;Diadema_sp._seto16_ott312262&quot;            
-## [12] &quot;Diadema_sp._seto9_ott587485&quot;             
-## [13] &quot;Diadema_sp._seto38_ott66625&quot;             
-## [14] &quot;Diadema_setosum_ott631175&quot;               
-## [15] &quot;Diadema_sp._seto19_ott66624&quot;             
-## [16] &quot;Diadema_sp._DJN9_ott66626&quot;               
-## [17] &quot;Diademasp.CS-2014ott5502179&quot;             
-## [18] &quot;Diadema_savignyi_ott395692&quot;              
-## [19] &quot;Diadema_sp._SETO15_ott587479&quot;            
-## [20] &quot;Diadema_palmeri_ott836860&quot;               
-## [21] &quot;Diadema_sp._seto35_ott66618&quot;             
-## [22] &quot;Diadema_sp._DSM4_ott587481&quot;              
-## [23] &quot;Diadema_sp._DSM3_ott587482&quot;              
-## [24] &quot;Diadema_antillarum_antillarum_ott4147370&quot;
-## [25] &quot;Diadema_antillarum_scensionis_ott220009&quot; 
-## [26] &quot;Diadema_africanum_ott4147369&quot;            
-## [27] &quot;Diadema_sp._seto10_ott587484&quot;            
-## [28] &quot;Diadema_vetus_ott5725747&quot;                
-## [29] &quot;Diadema_principeana_ott5725746&quot;          
-## [30] &quot;Diadema_ascensionis_ott4950423&quot;          
-## [31] &quot;Diadema_lobatum_ott4950422&quot;              
-## [32] &quot;Diadema_pseudodiadema_ott4950421&quot;        
-## [33] &quot;Diadema_africana_ott5502180&quot;             
+##  [1] &quot;Garrettia_parva_ott6356094&quot;              
+##  [2] &quot;Garrettia_rotella_ott6356095&quot;            
+##  [3] &quot;Diadema_savignyi_ott395692&quot;              
+##  [4] &quot;Diadema_palmeri_ott836860&quot;               
+##  [5] &quot;Diadema_setosum_ott631175&quot;               
+##  [6] &quot;Diadema_paucispinum_ott312263&quot;           
+##  [7] &quot;unclassified_Diadema_ott7669081&quot;         
+##  [8] &quot;Diadema_africanum_ott4147369&quot;            
+##  [9] &quot;Diadema_antillarum_scensionis_ott220009&quot; 
+## [10] &quot;Diadema_antillarum_antillarum_ott4147370&quot;
+## [11] &quot;Diadema_mexicanum_ott639130&quot;             
+## [12] &quot;Diademasp.SP04-BIO_4_JGLCO_AYott7072105&quot; 
+## [13] &quot;Diademasp.SP03-BIO_3_JGLCO_AYott7072104&quot; 
+## [14] &quot;Diademasp.SP02-BIO_2_JGLCO_AYott7072103&quot; 
+## [15] &quot;Diadema_sp._DSM1_ott219999&quot;              
+## [16] &quot;Diadema_sp._DSM6_ott771059&quot;              
+## [17] &quot;Diademasp.ACOSTI-NIOTSU3ott7072098&quot;      
+## [18] &quot;Diademasp.LI03-BIO_JGLCO_AYott7072102&quot;   
+## [19] &quot;Diademasp.LI02-BIO_JGLCO_AYott7072101&quot;   
+## [20] &quot;Diademasp.LI01-BIO_JGLCO_AYott7072100&quot;   
+## [21] &quot;Diademasp.ACOSTI-NIOTSU4ott7072099&quot;      
+## [22] &quot;Diadema_sp._seto35_ott66618&quot;             
+## [23] &quot;Diadema_sp._seto18_ott66623&quot;             
+## [24] &quot;Diadema_sp._seto19_ott66624&quot;             
+## [25] &quot;Diadema_sp._seto38_ott66625&quot;             
+## [26] &quot;Diadema_sp._DJN9_ott66626&quot;               
+## [27] &quot;Diademasp.CS-2014ott5502179&quot;             
+## [28] &quot;Diadema_sp._seto17_ott587478&quot;            
+## [29] &quot;Diadema_sp._SETO15_ott587479&quot;            
+## [30] &quot;Diadema_sp._dsm5_ott587480&quot;              
+## [31] &quot;Diadema_sp._DSM4_ott587481&quot;              
+## [32] &quot;Diadema_sp._DSM3_ott587482&quot;              
+## [33] &quot;Diadema_sp._DSM2_ott587483&quot;              
+## [34] &quot;Diadema_sp._seto10_ott587484&quot;            
+## [35] &quot;Diadema_sp._seto9_ott587485&quot;             
+## [36] &quot;Diadema_sp._DSM8_ott587486&quot;              
+## [37] &quot;Diadema_sp._DSM7_ott587487&quot;              
+## [38] &quot;Diadema_sp._seto16_ott312262&quot;            
+## [39] &quot;Diadema_africana_ott5502180&quot;             
+## [40] &quot;Diadema_principeana_ott5725746&quot;          
+## [41] &quot;Diadema_vetus_ott5725747&quot;                
+## [42] &quot;Diadema_regnyi_ott7669077&quot;               
+## [43] &quot;Diadema_amalthei_ott7669073&quot;             
+## [44] &quot;Diadema_affine_ott7669072&quot;               
+## [45] &quot;Diadema_subcomplanatum_ott7669079&quot;       
+## [46] &quot;Diadema_ruppelii_ott7669078&quot;             
+## [47] &quot;Diadema_calloviensis_ott7669074&quot;         
+## [48] &quot;Diadema_megastoma_ott7669075&quot;            
+## [49] &quot;Diadema_priscum_ott7669076&quot;              
+## [50] &quot;Garrettia_biangulata_ott7669080&quot;         
+## [51] &quot;Diadema_ascensionis_ott4950423&quot;          
+## [52] &quot;Diadema_lobatum_ott4950422&quot;              
 ## 
 ## $edge_label
-## [1] &quot;Diadema_antillarum_ott1022356&quot; &quot;'Diadema(genusinHolozoa&quot;      
-## [3] &quot;ott631176'&quot;</code></pre>
+## [1] &quot;Diadema_antillarum_ott1022356&quot;  &quot;&#39;Garrettia(genusinOpisthokonta&quot;
+## [3] &quot;ott631176&#39;&quot;</code></pre>
 <p>By default, this function return all taxa (including self, and internal) descending from this <code>ott_id</code> but it also possible to return <code>phylo</code> object.</p>
 </div>
 <div id="how-do-i-get-the-tree-for-a-particular-taxonomic-group" class="section level3">
 <h3>How do I get the tree for a particular taxonomic group?</h3>
 <p>If you are looking to get the tree for a particular taxonomic group, you need to first identify it by its node id or ott id, and then use the <code>tol_subtree()</code> function:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">mono_id &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="st">&quot;Monotremata&quot;</span>)</a>
-<a class="sourceLine" id="cb19-2" title="2">mono_tree &lt;-<span class="st"> </span><span class="kw">tol_subtree</span>(<span class="dt">ott_id =</span> <span class="kw">ott_id</span>(mono_id))</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a>mono_id &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="st">&quot;Monotremata&quot;</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a>mono_tree &lt;-<span class="st"> </span><span class="kw">tol_subtree</span>(<span class="dt">ott_id =</span> <span class="kw">ott_id</span>(mono_id))</span></code></pre></div>
 <pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
 ## with labels: Tachyglossus ott16047, Tachyglossus aculeatus ott16038,
 ## Ornithorhynchidae ott344066, Ornithorhynchus ott962391</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">plot</span>(mono_tree)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="kw">plot</span>(mono_tree)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 <div id="how-do-i-find-trees-from-studies-focused-on-my-favourite-taxa" class="section level3">
 <h3>How do I find trees from studies focused on my favourite taxa?</h3>
 <p>The function <code>studies_find_trees()</code> allows the user to search for studies matching a specific criteria. The function <code>studies_properties()</code> returns the list of properties that can be used in the search.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1">furry_studies &lt;-<span class="st"> </span><span class="kw">studies_find_studies</span>(<span class="dt">property =</span> <span class="st">&quot;ot:focalCladeOTTTaxonName&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;Mammalia&quot;</span>)</a>
-<a class="sourceLine" id="cb22-2" title="2">furry_ids &lt;-<span class="st"> </span>furry_studies<span class="op">$</span>study_ids</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a>furry_studies &lt;-<span class="st"> </span><span class="kw">studies_find_studies</span>(<span class="dt">property =</span> <span class="st">&quot;ot:focalCladeOTTTaxonName&quot;</span>, <span class="dt">value =</span> <span class="st">&quot;Mammalia&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a>furry_ids &lt;-<span class="st"> </span>furry_studies<span class="op">$</span>study_ids</span></code></pre></div>
 <p>Now that we know the <code>study_id</code>, we can ask for the meta data information associated with this study:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">furry_meta &lt;-<span class="st"> </span><span class="kw">get_study_meta</span>(<span class="st">&quot;pg_2550&quot;</span>)</a>
-<a class="sourceLine" id="cb23-2" title="2"><span class="kw">get_publication</span>(furry_meta) <span class="co">## The citation for the source of the study</span></a></code></pre></div>
-<pre><code>## [1] &quot;O'Leary, Maureen A., Marc Allard, Michael J. Novacek, Jin Meng, and John Gatesy. 2004. \&quot;Building the mammalian sector of the tree of life: Combining different data and a discussion of divergence times for placental mammals.\&quot; In: Cracraft J., &amp; Donoghue M., eds. Assembling the Tree of Life. pp. 490-516. Oxford, United Kingdom, Oxford University Press.&quot;
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a>furry_meta &lt;-<span class="st"> </span><span class="kw">get_study_meta</span>(<span class="st">&quot;pg_2550&quot;</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="kw">get_publication</span>(furry_meta) <span class="co">## The citation for the source of the study</span></span></code></pre></div>
+<pre><code>## [1] &quot;O&#39;Leary, Maureen A., Marc Allard, Michael J. Novacek, Jin Meng, and John Gatesy. 2004. \&quot;Building the mammalian sector of the tree of life: Combining different data and a discussion of divergence times for placental mammals.\&quot; In: Cracraft J., &amp; Donoghue M., eds. Assembling the Tree of Life. pp. 490-516. Oxford, United Kingdom, Oxford University Press.&quot;
 ## attr(,&quot;DOI&quot;)
 ## [1] &quot;&quot;</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">get_tree_ids</span>(furry_meta) <span class="co">## This study has 10 trees associated with it</span></a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="kw">get_tree_ids</span>(furry_meta) <span class="co">## This study has 10 trees associated with it</span></span></code></pre></div>
 <pre><code>##  [1] &quot;tree5513&quot; &quot;tree5515&quot; &quot;tree5516&quot; &quot;tree5517&quot; &quot;tree5518&quot; &quot;tree5519&quot;
 ##  [7] &quot;tree5520&quot; &quot;tree5521&quot; &quot;tree5522&quot; &quot;tree5523&quot;</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">candidate_for_synth</span>(furry_meta) <span class="co">## None of these trees are yet included in the OTL</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="kw">candidate_for_synth</span>(furry_meta) <span class="co">## None of these trees are yet included in the OTL</span></span></code></pre></div>
 <pre><code>## NULL</code></pre>
 <p>Using <code>get_study(&quot;pg_2550&quot;)</code> would returns a <code>multiPhylo</code> object (default) with all the trees associated with this particular study, while <code>get_study_tree(&quot;pg_2550&quot;, &quot;tree5513&quot;)</code> would return one of these trees.</p>
 </div>
@@ -645,46 +762,45 @@ tree is prohibited.</code></pre>
 <p>This message occurs as duplicate labels are not allowed in the NEXUS format and it is stricly enforced by the part of the code used by <code>rotl</code> to import the trees in memory.</p>
 <p>If you use a version of <code>rotl</code> more recent than 0.4.1, this should not happen by default for the function <code>get_study_tree</code>. If it happens with another function, please <a href="https://github.com/ropensci/rotl/issues">let us know</a>.</p>
 <p>The easiest way to work around this is to save the tree in a file, and use APE to read it in memory:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">get_study_tree</span>(</a>
-<a class="sourceLine" id="cb30-2" title="2">  <span class="dt">study_id =</span> <span class="st">&quot;pg_710&quot;</span>, <span class="dt">tree_id =</span> <span class="st">&quot;tree1277&quot;</span>,</a>
-<a class="sourceLine" id="cb30-3" title="3">  <span class="dt">tip_label =</span> <span class="st">&quot;ott_taxon_name&quot;</span>, <span class="dt">file =</span> <span class="st">&quot;/tmp/tree.tre&quot;</span>,</a>
-<a class="sourceLine" id="cb30-4" title="4">  <span class="dt">file_format =</span> <span class="st">&quot;newick&quot;</span></a>
-<a class="sourceLine" id="cb30-5" title="5">)</a>
-<a class="sourceLine" id="cb30-6" title="6">tr &lt;-<span class="st"> </span>ape<span class="op">::</span><span class="kw">read.tree</span>(<span class="dt">file =</span> <span class="st">&quot;/tmp/tree.tre&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="kw">get_study_tree</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>  <span class="dt">study_id =</span> <span class="st">&quot;pg_710&quot;</span>, <span class="dt">tree_id =</span> <span class="st">&quot;tree1277&quot;</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>  <span class="dt">tip_label =</span> <span class="st">&quot;ott_taxon_name&quot;</span>, <span class="dt">file =</span> <span class="st">&quot;/tmp/tree.tre&quot;</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>  <span class="dt">file_format =</span> <span class="st">&quot;newick&quot;</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a>tr &lt;-<span class="st"> </span>ape<span class="op">::</span><span class="kw">read.tree</span>(<span class="dt">file =</span> <span class="st">&quot;/tmp/tree.tre&quot;</span>)</span></code></pre></div>
 </div>
 <div id="how-do-i-get-the-higher-taxonomy-for-a-given-taxa" class="section level3">
 <h3>How do I get the higher taxonomy for a given taxa?</h3>
 <p>If you encounter a taxon name you are not familiar with, it might be useful to obtain its higher taxonomy to see where it fits in the tree of life. We can combine several taxonomy methods to extract this information easily.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">giant_squid &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="st">&quot;Architeuthis&quot;</span>)</a>
-<a class="sourceLine" id="cb31-2" title="2"><span class="kw">tax_lineage</span>(<span class="kw">taxonomy_taxon_info</span>(<span class="kw">ott_id</span>(giant_squid), <span class="dt">include_lineage =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a>giant_squid &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(<span class="st">&quot;Architeuthis&quot;</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="kw">tax_lineage</span>(<span class="kw">taxonomy_taxon_info</span>(<span class="kw">ott_id</span>(giant_squid), <span class="dt">include_lineage =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
 <pre><code>## $`564394`
 ##          rank               name        unique_name  ott_id
 ## 1      family     Architeuthidae     Architeuthidae  564393
-## 2    suborder          Oegopsina          Oegopsina   43352
-## 3       order           Teuthida           Teuthida  380472
-## 4  superorder     Decapodiformes     Decapodiformes  854107
-## 5  infraclass       Neocoleoidea       Neocoleoidea  329546
-## 6    subclass          Coleoidea          Coleoidea    7371
-## 7       class        Cephalopoda        Cephalopoda    7368
-## 8      phylum           Mollusca           Mollusca  802117
-## 9     no rank     Lophotrochozoa     Lophotrochozoa  155737
-## 10    no rank        Protostomia        Protostomia  189832
-## 11    no rank          Bilateria          Bilateria  117569
-## 12    no rank          Eumetazoa          Eumetazoa  641038
-## 13    kingdom            Metazoa            Metazoa  691846
-## 14    no rank            Holozoa            Holozoa 5246131
-## 15    no rank       Opisthokonta       Opisthokonta  332573
-## 16     domain          Eukaryota          Eukaryota  304358
-## 17    no rank cellular organisms cellular organisms   93302
-## 18    no rank               life               life  805080</code></pre>
+## 2       order          Oegopsida          Oegopsida   43352
+## 3  superorder     Decapodiformes     Decapodiformes  854107
+## 4  infraclass       Neocoleoidea       Neocoleoidea  329546
+## 5    subclass          Coleoidea          Coleoidea    7371
+## 6       class        Cephalopoda        Cephalopoda    7368
+## 7      phylum           Mollusca           Mollusca  802117
+## 8     no rank     Lophotrochozoa     Lophotrochozoa  155737
+## 9     no rank        Protostomia        Protostomia  189832
+## 10    no rank          Bilateria          Bilateria  117569
+## 11    no rank          Eumetazoa          Eumetazoa  641038
+## 12    kingdom            Metazoa            Metazoa  691846
+## 13    no rank            Holozoa            Holozoa 5246131
+## 14    no rank       Opisthokonta       Opisthokonta  332573
+## 15     domain          Eukaryota          Eukaryota  304358
+## 16    no rank cellular organisms cellular organisms   93302
+## 17    no rank               life               life  805080</code></pre>
 </div>
 <div id="why-are-ott-ids-discovered-with-rotl-missing-from-an-induced-subtree" class="section level3">
 <h3>Why are OTT IDs discovered with <code>rotl</code> missing from an induced subtree?</h3>
 <p>Some taxonomic names that can be retrieved through the taxonomic name resolution service are not part of the Open Tree’s synthesis tree. These are usually traditional higher-level taxa that have been found to be paraphyletic.</p>
 <p>For instance, if you wanted to fetch a tree relating the three birds that go into a <a href="https://en.wikipedia.org/wiki/Turducken">Turkducken</a> as well as the pork used for stuffing, you might search for the turkey, duck, chicken, and pork genera:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">turducken &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Meleagris&quot;</span>, <span class="st">&quot;Anas&quot;</span>, <span class="st">&quot;Gallus&quot;</span>, <span class="st">&quot;Sus&quot;</span>)</a>
-<a class="sourceLine" id="cb33-2" title="2">taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(turducken, <span class="dt">context =</span> <span class="st">&quot;Animals&quot;</span>)</a>
-<a class="sourceLine" id="cb33-3" title="3">taxa</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>turducken &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Meleagris&quot;</span>, <span class="st">&quot;Anas&quot;</span>, <span class="st">&quot;Gallus&quot;</span>, <span class="st">&quot;Sus&quot;</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a>taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(turducken, <span class="dt">context =</span> <span class="st">&quot;Animals&quot;</span>)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a>taxa</span></code></pre></div>
 <pre><code>##   search_string unique_name approximate_match ott_id is_synonym flags
 ## 1     meleagris   Meleagris             FALSE 446481      FALSE      
 ## 2          anas        Anas             FALSE 765185      FALSE      
@@ -696,79 +812,98 @@ tree is prohibited.</code></pre>
 ## 3              3
 ## 4              1</code></pre>
 <p>We have the OTT ids for each genus, however, if we tried to get the induced subtree from these results, we would get an error:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa))</a></code></pre></div>
-<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Mammalia ott244265, Theria (subclass in Deuterostomia)
-## ott229558, Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778,
-## Laurasiatheria ott392223, mrcaott1548ott4697, mrcaott1548ott6790,
-## mrcaott1548ott3021, Cetartiodactyla ott622916, mrcaott1548ott21987,
-## Suina ott916745, Suidae ott730008, Sauropsida ott639642, Sauria (order in
-## Opisthokonta) ott329823, Archelosauria ott4947372, Archosauria ott335588,
-## Dinosauria ott90215, Coelurosauria ott664351, Theropoda ott664350,
-## Saurischia ott90223, Aves ott81461, Neognathae ott241846, Galliformes
-## ott837585, mrcaott4765ott75785, mrcaott4765ott104461, mrcaott4765ott151684,
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a>tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa))</span></code></pre></div>
+<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
+## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
+## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
+## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
+## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sauropsida
+## ott639642, Sauria ott329823, mrcaott246ott4128455, mrcaott246ott4127082,
+## mrcaott246ott4129629, mrcaott246ott4142716, mrcaott246ott4126667,
+## mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216, mrcaott246ott4947920,
+## mrcaott246ott4127428, mrcaott246ott4126230, mrcaott246ott4127421,
+## mrcaott246ott664349, mrcaott246ott4126505, mrcaott246ott4127015,
+## mrcaott246ott4129653, mrcaott246ott4127541, mrcaott246ott4946623,
+## mrcaott246ott4126482, mrcaott246ott4128105, mrcaott246ott4127288,
+## mrcaott246ott4132146, mrcaott246ott3602822, mrcaott246ott4143599,
+## mrcaott246ott3600976, mrcaott246ott4132107, Aves ott81461, Neognathae
+## ott241846, Galliformes ott837585, mrcaott4765ott6520194, mrcaott4765ott109888,
+## mrcaott4765ott75785, mrcaott4765ott104461, mrcaott4765ott151684,
 ## mrcaott4765ott54193, mrcaott4765ott49319, mrcaott4765ott415487,
-## mrcaott4765ott51354, mrcaott4765ott53700, mrcaott4765ott446490,
-## Meleagridinae ott781250, mrcaott49310ott102705, mrcaott49310ott51349,
-## mrcaott49310ott153554, mrcaott153554ott867027, Anseriformes ott241841,
-## mrcaott30843ott714464, Anatidae ott765193, mrcaott30843ott75874,
-## mrcaott30843ott962771, mrcaott30843ott145504, mrcaott30843ott30847,
-## mrcaott30843ott196654, mrcaott30843ott30845</code></pre>
+## mrcaott4765ott51354, mrcaott4765ott53700, mrcaott4765ott446490, Meleagridinae
+## ott781250, mrcaott49310ott102705, mrcaott49310ott51349, mrcaott49310ott153554,
+## mrcaott153554ott867027, Anseriformes ott241841, mrcaott30843ott714464, Anatidae
+## ott765193, mrcaott30843ott75874, mrcaott30843ott962771, mrcaott30843ott145504,
+## mrcaott30843ott30847, mrcaott30843ott196654, mrcaott30843ott30845</code></pre>
 <p>As the error message suggests, some of the taxa are not found in the synthetic tree. This occurs for 2 main reasons: either the taxa is invalid, or it is part of a group that is not monophyletic in the synthetic tree. There are two ways to get around this issue: (1) removing the taxa that are not part of the Open Tree; (2) using the complete species name.</p>
 <div id="removing-the-taxa-missing-from-the-synthetic-tree" class="section level4">
 <h4>Removing the taxa missing from the synthetic tree</h4>
 <p>To help with this situation, <code>rotl</code> provides a way to identify the OTT ids that are not part of the synthetic tree. The function <code>is_in_tree()</code> takes the output of the <code>ott_id()</code> function and returns a vector of logical indicating whether the taxa are part of the synthetic tree. We can then use to only keep the taxa that appear in the synthetic tree:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">in_tree &lt;-<span class="st"> </span><span class="kw">is_in_tree</span>(<span class="kw">ott_id</span>(taxa))</a>
-<a class="sourceLine" id="cb37-2" title="2">in_tree</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a>in_tree &lt;-<span class="st"> </span><span class="kw">is_in_tree</span>(<span class="kw">ott_id</span>(taxa))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>in_tree</span></code></pre></div>
 <pre><code>## Meleagris      Anas    Gallus       Sus 
 ##      TRUE     FALSE      TRUE      TRUE</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa)[in_tree])</a></code></pre></div>
-<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Mammalia ott244265, Theria (subclass in Deuterostomia)
-## ott229558, Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778,
-## Laurasiatheria ott392223, mrcaott1548ott4697, mrcaott1548ott6790,
-## mrcaott1548ott3021, Cetartiodactyla ott622916, mrcaott1548ott21987,
-## Suina ott916745, Suidae ott730008, Sauropsida ott639642, Sauria (order
-## in Opisthokonta) ott329823, Archelosauria ott4947372, Archosauria
-## ott335588, Dinosauria ott90215, Coelurosauria ott664351, Theropoda
-## ott664350, Saurischia ott90223, Aves ott81461, Neognathae ott241846,
-## Galloanserae ott5839486, Galliformes ott837585, mrcaott4765ott75785,
-## mrcaott4765ott104461, mrcaott4765ott151684, mrcaott4765ott54193,
-## mrcaott4765ott49319, mrcaott4765ott415487, mrcaott4765ott51354,
-## mrcaott4765ott53700, mrcaott4765ott446490, Meleagridinae ott781250,
-## mrcaott49310ott102705, mrcaott49310ott51349, mrcaott49310ott153554,
-## mrcaott153554ott867027</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a>tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa)[in_tree])</span></code></pre></div>
+<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
+## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
+## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
+## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
+## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sauropsida
+## ott639642, Sauria ott329823, mrcaott246ott4128455, mrcaott246ott4127082,
+## mrcaott246ott4129629, mrcaott246ott4142716, mrcaott246ott4126667,
+## mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216, mrcaott246ott4947920,
+## mrcaott246ott4127428, mrcaott246ott4126230, mrcaott246ott4127421,
+## mrcaott246ott664349, mrcaott246ott4126505, mrcaott246ott4127015,
+## mrcaott246ott4129653, mrcaott246ott4127541, mrcaott246ott4946623,
+## mrcaott246ott4126482, mrcaott246ott4128105, mrcaott246ott4127288,
+## mrcaott246ott4132146, mrcaott246ott3602822, mrcaott246ott4143599,
+## mrcaott246ott3600976, mrcaott246ott4132107, Aves ott81461, Neognathae ott241846,
+## Galloanserae ott5839486, Galliformes ott837585, mrcaott4765ott6520194,
+## mrcaott4765ott109888, mrcaott4765ott75785, mrcaott4765ott104461,
+## mrcaott4765ott151684, mrcaott4765ott54193, mrcaott4765ott49319,
+## mrcaott4765ott415487, mrcaott4765ott51354, mrcaott4765ott53700,
+## mrcaott4765ott446490, Meleagridinae ott781250, mrcaott49310ott102705,
+## mrcaott49310ott51349, mrcaott49310ott153554, mrcaott153554ott867027</code></pre>
 </div>
 <div id="using-the-full-taxonomic-names" class="section level4">
 <h4>Using the full taxonomic names</h4>
 <p>The best way to avoid these problems is to specify complete species names (species being the lowest level of classification in the Open Tree taxonomy they are guaranteed to be monophyletic):</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">turducken_spp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Meleagris gallopavo&quot;</span>, <span class="st">&quot;Anas platyrhynchos&quot;</span>, <span class="st">&quot;Gallus gallus&quot;</span>, <span class="st">&quot;Sus scrofa&quot;</span>)</a>
-<a class="sourceLine" id="cb41-2" title="2">taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(turducken_spp, <span class="dt">context =</span> <span class="st">&quot;Animals&quot;</span>)</a>
-<a class="sourceLine" id="cb41-3" title="3">tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa))</a></code></pre></div>
-<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes
-## with labels: Mammalia ott244265, Theria (subclass in Deuterostomia)
-## ott229558, Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778,
-## Laurasiatheria ott392223, mrcaott1548ott4697, mrcaott1548ott6790,
-## mrcaott1548ott3021, Cetartiodactyla ott622916, mrcaott1548ott21987, Suina
-## ott916745, Suidae ott730008, Sus ott730021, Sauropsida ott639642, Sauria
-## (order in Opisthokonta) ott329823, Archelosauria ott4947372, Archosauria
-## ott335588, Dinosauria ott90215, Coelurosauria ott664351, Theropoda
-## ott664350, Saurischia ott90223, Aves ott81461, Neognathae ott241846,
-## Galliformes ott837585, mrcaott4765ott75785, mrcaott4765ott104461,
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>turducken_spp &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Meleagris gallopavo&quot;</span>, <span class="st">&quot;Anas platyrhynchos&quot;</span>, <span class="st">&quot;Gallus gallus&quot;</span>, <span class="st">&quot;Sus scrofa&quot;</span>)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a>taxa &lt;-<span class="st"> </span><span class="kw">tnrs_match_names</span>(turducken_spp, <span class="dt">context =</span> <span class="st">&quot;Animals&quot;</span>)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a>tr &lt;-<span class="st"> </span><span class="kw">tol_induced_subtree</span>(<span class="kw">ott_id</span>(taxa))</span></code></pre></div>
+<pre><code>## Warning in collapse_singles(tr, show_progress): Dropping singleton nodes with
+## labels: Mammalia ott244265, Theria (subclass in Deuterostomia) ott229558,
+## Eutheria (in Deuterostomia) ott683263, Boreoeutheria ott5334778, Laurasiatheria
+## ott392223, mrcaott1548ott4697, mrcaott1548ott6790, mrcaott1548ott3607484,
+## mrcaott1548ott4942380, mrcaott1548ott4942547, mrcaott1548ott3021, Artiodactyla
+## ott622916, mrcaott1548ott21987, Suina ott916745, Suidae ott730008, Sus
+## ott730021, Sauropsida ott639642, Sauria ott329823, mrcaott246ott4128455,
+## mrcaott246ott4127082, mrcaott246ott4129629, mrcaott246ott4142716,
+## mrcaott246ott4126667, mrcaott246ott1662, mrcaott246ott2982, mrcaott246ott31216,
+## mrcaott246ott4947920, mrcaott246ott4127428, mrcaott246ott4126230,
+## mrcaott246ott4127421, mrcaott246ott664349, mrcaott246ott4126505,
+## mrcaott246ott4127015, mrcaott246ott4129653, mrcaott246ott4127541,
+## mrcaott246ott4946623, mrcaott246ott4126482, mrcaott246ott4128105,
+## mrcaott246ott4127288, mrcaott246ott4132146, mrcaott246ott3602822,
+## mrcaott246ott4143599, mrcaott246ott3600976, mrcaott246ott4132107, Aves
+## ott81461, Neognathae ott241846, Galliformes ott837585, mrcaott4765ott6520194,
+## mrcaott4765ott109888, mrcaott4765ott75785, mrcaott4765ott104461,
 ## mrcaott4765ott151684, mrcaott4765ott54193, mrcaott4765ott49319,
 ## mrcaott4765ott415487, mrcaott4765ott51354, mrcaott4765ott53700,
 ## mrcaott4765ott446490, Meleagridinae ott781250, Meleagris ott446481,
 ## mrcaott49310ott102705, mrcaott49310ott51349, mrcaott49310ott153554,
 ## mrcaott153554ott867027, Gallus ott153562, mrcaott153554ott153572,
-## mrcaott153572ott240568, Anseriformes ott241841, mrcaott30843ott714464,
-## Anatidae ott765193, mrcaott30843ott75874, mrcaott30843ott962771,
-## mrcaott30843ott145504, mrcaott30843ott30847, mrcaott30843ott196654,
-## mrcaott30843ott30845, mrcaott30845ott30850, mrcaott30850ott82420,
-## mrcaott30850ott82414, mrcaott30850ott30858, mrcaott30850ott30855,
-## mrcaott30850ott604172, mrcaott30850ott82410, mrcaott82410ott339494,
-## mrcaott82410ott604175, mrcaott82410ott604182, mrcaott82410ott190881</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">plot</span>(tr)</a></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+## mrcaott153572ott240568, Anseriformes ott241841, mrcaott30843ott714464, Anatidae
+## ott765193, mrcaott30843ott75874, mrcaott30843ott962771, mrcaott30843ott145504,
+## mrcaott30843ott30847, mrcaott30843ott196654, mrcaott30843ott30845,
+## mrcaott30845ott30850, mrcaott30850ott82420, mrcaott30850ott82414,
+## mrcaott30850ott30858, mrcaott30850ott30855, mrcaott30850ott604172,
+## mrcaott30850ott82410, mrcaott82410ott339494, mrcaott82410ott604175,
+## mrcaott82410ott604182, mrcaott82410ott190881</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a><span class="kw">plot</span>(tr)</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 </div>
 </div>

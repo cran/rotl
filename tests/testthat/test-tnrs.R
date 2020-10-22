@@ -12,15 +12,15 @@ test_that("tnrs_match_names fails if incorrect context is provided", {
   )
 })
 
-test_that("tnrs_match_names fails if invalid name provided (nothing returned)", {
+test_that("tnrs_match_names warns if single invalid name provided", {
   skip_on_cran()
-  expect_error(
+  expect_warning(
     tnrs_match_names("fluffy", do_approximate_matching = FALSE),
-    "No matches for any of the provided taxa"
+    "are not matched"
   )
 })
 
-test_that("tnrs_match_names warns if a name is not matched", {
+test_that("tnrs_match_names warns if at least one name is not matched", {
   skip_on_cran()
   expect_warning(
     tnrs_match_names(c("fluffy", "felis"), do_approximate_matching = FALSE),
@@ -78,5 +78,5 @@ test_that("tnrs_infer_context", {
   tic <- tnrs_infer_context(c("Felis", "Leo"))
   expect_equal(tic[["context_name"]], "Mammals")
   expect_equal(tic[["context_ott_id"]], 244265)
-  expect_equal(tic[["ambiguous_names"]][[1]], "leo")
+  expect_equal(tic[["ambiguous_names"]][[1]], "Leo")
 })

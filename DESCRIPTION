@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.10
+Version: 3.0.11
 Authors@R: 
     c(person(given = "Francois",
              family = "Michonneau",
@@ -25,7 +25,7 @@ Description: An interface to the 'Open Tree of Life' API to retrieve
     identifiers'. The 'Open Tree of Life' aims at assembling a
     comprehensive phylogenetic tree for all named species.
 License: BSD_2_clause + file LICENSE
-URL: https://github.com/ropensci/rotl
+URL: https://docs.ropensci.org/rotl/, https://github.com/ropensci/rotl
 BugReports: https://github.com/ropensci/rotl/issues
 Depends: R (>= 3.1.1)
 Imports: ape, assertthat (>= 0.1), httr, jsonlite, rentrez, rncl (>=
@@ -35,13 +35,13 @@ Suggests: fulltext (>= 0.1.6), knitr (>= 1.12), MCMCglmm, phylobase,
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.99.9001
+RoxygenNote: 7.1.1
 X-schema.org-isPartOf: https://ropensci.org
 X-schema.org-keywords: metadata, ropensci, phylogenetics,
         independant-contrasts, biodiversity
 X-schema.org-relatedLink: https://codemeta.github.io/codemetar
 NeedsCompilation: no
-Packaged: 2019-09-28 11:05:00 UTC; francois
+Packaged: 2020-10-22 09:18:28 UTC; francois
 Author: Francois Michonneau [aut, cre]
     (<https://orcid.org/0000-0002-9092-966X>),
   Joseph Brown [aut] (<https://orcid.org/0000-0002-3835-8062>),
@@ -49,4 +49,4 @@ Author: Francois Michonneau [aut, cre]
   Scott Chamberlain [rev] (<https://orcid.org/0000-0003-1444-9135>)
 Maintainer: Francois Michonneau <francois.michonneau@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-09-28 11:30:02 UTC
+Date/Publication: 2020-10-22 09:40:02 UTC
