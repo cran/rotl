@@ -2,13 +2,7 @@
 library(rotl)
 
 ## ----egg_data-----------------------------------------------------------------
-## This should work, but Wiley has currently broken the URLs to access the
-## SI.
-## if (require(readxl) && require(fulltext)) {
-## doi <- "10.1111/jeb.12282"
-## xl_file <- try(ft_get_si(doi, 1, save.name="egg.xls"), silent = TRUE)
-## egg_data <- read_excel(xl_file)
-## } else {
+## This dataset is available from the publisher's study website:
 egg_data <- read.csv(system.file("extdata", "egg.csv", package = "rotl"),
   stringsAsFactors = FALSE
 )
