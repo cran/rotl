@@ -45,10 +45,3 @@ check_is_string <- function(x) {
     " is not a string (a length one character vector)."
   )
 }
-
-
-release_questions <- function() {
-  c(
-    "Have you run `make_vignettes()` (in vignettes/) to pre-render the vignettes?"
-  )
-}

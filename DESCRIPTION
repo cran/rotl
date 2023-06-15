@@ -1,6 +1,6 @@
 Package: rotl
 Title: Interface to the 'Open Tree of Life' API
-Version: 3.0.14
+Version: 3.1.0
 Authors@R: 
     c(person(given = "Francois",
              family = "Michonneau",
@@ -40,7 +40,7 @@ X-schema.org-keywords: metadata, ropensci, phylogenetics,
 X-schema.org-relatedLink: https://codemeta.github.io/codemetar
 RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-10-06 15:05:16 UTC; francois
+Packaged: 2023-06-15 09:34:25 UTC; francois
 Author: Francois Michonneau [aut, cre]
     (<https://orcid.org/0000-0002-9092-966X>),
   Joseph Brown [aut] (<https://orcid.org/0000-0002-3835-8062>),
@@ -48,4 +48,4 @@ Author: Francois Michonneau [aut, cre]
   Scott Chamberlain [rev] (<https://orcid.org/0000-0003-1444-9135>)
 Maintainer: Francois Michonneau <francois.michonneau@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-10-06 20:40:02 UTC
+Date/Publication: 2023-06-15 13:50:07 UTC
